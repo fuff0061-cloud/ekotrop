@@ -1,0 +1,3623 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Экологическая тропа «Чистяковская роща» — Краснодар</title>
+
+  <!-- Шрифты Manrope и Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Мгновенное применение сохранённой темы до отрисовки страницы (без мигания) -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('chistyakovskaya_theme') === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Настройка светлой (бело-зелёной) и тёмной (лесной) палитры -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            // Светлая тема
+            milk: '#FAFDF9',
+            cardBorder: '#E1EFE4',
+            sage: '#5EA87B',
+            sageDark: '#488B63',
+            mintSoft: '#EBF6EE',
+            mintMid: '#D4ECDB',
+            forest: '#1F3327',
+            moss: '#45544B',
+            // Тёмная тема
+            nightBg: '#0E1712',
+            nightCard: '#16241C',
+            nightSoft: '#1F3327',
+            nightBorder: '#2B4235',
+            nightAccent: '#66C28A',
+            nightText: '#EAF5EE',
+            nightMuted: '#A6BFB0',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['Nunito', 'Manrope', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 8px 30px -12px rgba(31, 51, 39, 0.08)',
+            nightSoft: '0 10px 32px -12px rgba(0, 0, 0, 0.5)',
+            sage: '0 10px 25px -8px rgba(94, 168, 123, 0.42)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Прозрачные PNG-маскоты с мягкой тенью — идеально и на светлой, и на тёмной теме */
+    .mascot-img {
+      background: transparent !important;
+      filter: drop-shadow(0 8px 14px rgba(15, 28, 20, 0.22));
+      transition: transform 0.25s ease;
+    }
+    .dark .mascot-img {
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+    }
+
+    /* Плавное появление элементов */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-up {
+      animation: fadeSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Пульсация следующей рекомендуемой точки на карте */
+    @keyframes mapPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(94, 168, 123, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(94, 168, 123, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(94, 168, 123, 0);
+      }
+    }
+    .pin-pulse {
+      animation: mapPulse 2s infinite;
+    }
+
+    /* Падающее конфетти для финала */
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(105vh) rotate(540deg);
+        opacity: 0.15;
+      }
+    }
+    .confetti-piece {
+      position: fixed;
+      top: -20px;
+      z-index: 70;
+      pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+
+    /* Плавное раскрытие аккордеонов */
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .accordion-content.open {
+      grid-template-rows: 1fr;
+    }
+    .accordion-inner {
+      overflow: hidden;
+    }
+
+    /* Кастомный ползунок для HTML5-аудиоплеера */
+    .audio-range {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 9999px;
+      outline: none;
+      cursor: pointer;
+    }
+    .audio-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 9999px;
+      background: #488B63;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+      cursor: grab;
+      transition: transform 0.15s ease;
+    }
+    .dark .audio-range::-webkit-slider-thumb {
+      background: #66C28A;
+      border-color: #0E1712;
+    }
+    .audio-range::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.18);
+    }
+    .audio-range::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 9999px;
+      background: #488B63;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+      cursor: grab;
+    }
+    .dark .audio-range::-moz-range-thumb {
+      background: #66C28A;
+      border-color: #0E1712;
+    }
+
+    /* Печать / сохранение грамоты в PDF */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #cert-printable-area,
+      #cert-printable-area * {
+        visibility: visible !important;
+      }
+      #cert-printable-area {
+        position: fixed !important;
+        inset: 0 !important;
+        margin: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased bg-milk text-forest dark:bg-nightBg dark:text-nightText selection:bg-mintMid dark:selection:bg-nightSoft">
+  <!-- Скрытый общий input для подгрузки локальных фото и аудио -->
+  <input
+    type="file"
+    id="local-media-input"
+    multiple
+    accept="image/*,audio/*"
+    class="hidden"
+    onchange="handleLocalMediaUpload(event)"
+  />
+  <!-- Скрытый input для точечной загрузки 33119.jpg при SecurityError на file:// -->
+  <input
+    type="file"
+    id="cert-file-fallback-input"
+    accept="image/*"
+    class="hidden"
+    onchange="handleCertFileFallback(event)"
+  />
+
+  <!-- Всплывающий тост-статус (вместо alert) -->
+  <div
+    id="app-toast"
+    class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[80] max-w-md w-[calc(100%-2rem)] px-4 py-3 rounded-2xl bg-forest text-white dark:bg-nightAccent dark:text-nightBg text-sm font-bold shadow-2xl text-center animate-fade-up"
+  ></div>
+
+  <!-- =========================================================================
+       ВИД 1: ГЛАВНАЯ СТРАНИЦА + ЦИФРОВОЙ АТЛАС И АУДИОГИДЫ
+       ========================================================================= -->
+  <div id="home-view" class="min-h-screen flex flex-col">
+    <!-- Шапка главной страницы -->
+    <header class="sticky top-0 z-30 bg-milk/90 dark:bg-nightBg/90 backdrop-blur-md border-b border-cardBorder dark:border-nightBorder">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2 sm:gap-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-sage dark:bg-nightAccent text-white dark:text-nightBg flex items-center justify-center shadow-sm shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 21c.5-4.5 2.5-8 7-10M9 17c4.5 0 9-3.5 10-12-8.5 1-12 5.5-12 10 0 1 .2 1.8.5 2.5" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <p class="font-display font-extrabold text-sm sm:text-base leading-tight text-forest dark:text-nightText truncate">Чистяковская роща</p>
+            <p class="text-[11px] text-moss dark:text-nightMuted leading-tight truncate">Экологическая тропа • Краснодар</p>
+          </div>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-moss dark:text-nightMuted">
+          <a href="#before-walk" class="hover:text-sage dark:hover:text-nightAccent transition">Перед прогулкой</a>
+          <a href="#digital-atlas" class="hover:text-sage dark:hover:text-nightAccent transition">Атлас рощи</a>
+          <a href="#all-audioguides" class="hover:text-sage dark:hover:text-nightAccent transition">Аудиогид</a>
+        </nav>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <!-- Переключатель темы в шапке -->
+          <button
+            type="button"
+            onclick="toggleTheme()"
+            class="theme-toggle-btn px-3 py-2 rounded-xl border border-cardBorder dark:border-nightBorder bg-white dark:bg-nightCard hover:bg-mintSoft dark:hover:bg-nightSoft text-forest dark:text-nightText text-xs sm:text-sm font-bold transition flex items-center gap-1.5"
+            title="Переключить светлую и тёмную тему"
+          >
+            <span class="theme-icon">🌙</span>
+            <span class="hidden sm:inline theme-label">Тёмная</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="openTrailView()"
+            class="px-3.5 sm:px-4 py-2 rounded-xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg text-xs sm:text-sm font-extrabold shadow-sage transition active:scale-95 flex items-center gap-1"
+          >
+            <span>К маршруту</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6 sm:py-10 space-y-12">
+      <!-- HERO-БЛОК -->
+      <section class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-6 sm:p-10 relative overflow-hidden">
+        <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-mintSoft dark:bg-nightSoft opacity-70 blur-2xl"></div>
+
+        <div class="relative z-10 space-y-6">
+          <!-- Верхняя строка: бейдж + заметный переключатель светлой/тёмной темы -->
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-mintSoft dark:bg-nightSoft border border-mintMid dark:border-nightBorder text-sageDark dark:text-nightAccent text-xs font-bold">
+              <span>🌿 Памятник природы регионального значения</span>
+              <span class="opacity-50">•</span>
+              <span>ООПТ с 14.07.1988</span>
+            </div>
+
+            <!-- Заметный сегментированный переключатель темы на главном экране -->
+            <div class="inline-flex items-center p-1 rounded-2xl bg-milk dark:bg-nightBg border border-cardBorder dark:border-nightBorder">
+              <button
+                type="button"
+                onclick="setTheme('light')"
+                class="theme-pill-light px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1"
+              >
+                <span>☀️</span> Светлая
+              </button>
+              <button
+                type="button"
+                onclick="setTheme('dark')"
+                class="theme-pill-dark px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1"
+              >
+                <span>🌙</span> Тёмная
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-3 max-w-3xl">
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-forest dark:text-nightText leading-tight tracking-tight">
+              Экологическая тропа «Чистяковская роща»
+            </h1>
+            <p class="text-moss dark:text-nightMuted text-base sm:text-lg leading-relaxed">
+              Интерактивный кольцевой маршрут по историческому парку Краснодара, заложенному в 1900 году
+              (площадь <strong>54,41 га</strong>). Слушайте аудиогид на каждой станции, выполняйте задания своего класса и получите именную грамоту исследователя!
+            </p>
+          </div>
+
+          <!-- БЛОК ПРИВЕТСТВЕННЫХ МАСКОТОВ (33156.png + 33155.png) -->
+          <div id="hero-mascot-block" class="pt-1"></div>
+
+          <!-- ГЛАВНЫЕ КНОПКИ -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+          <button
+            type="button"
+            onclick="openRouteView(1)"
+            class="px-7 py-4 rounded-2xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-display font-extrabold text-base sm:text-lg shadow-sage transition transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
+          >
+            <span>Начать маршрут</span>
+            <span class="text-xl leading-none">→</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="openRouteView()"
+            class="px-6 py-4 rounded-2xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold text-base transition flex items-center justify-center gap-2 border border-mintMid dark:border-nightBorder"
+          >
+            <span>🗺️ Открыть карту</span>
+          </button>
+
+          <a
+            href="#digital-atlas"
+            class="px-6 py-4 rounded-2xl bg-white hover:bg-milk dark:bg-nightCard dark:hover:bg-nightSoft text-forest dark:text-nightText font-bold text-base transition flex items-center justify-center gap-2 border border-cardBorder dark:border-nightBorder"
+          >
+            <span>📖 Цифровой атлас</span>
+          </a>
+        </div>
+        </div>
+      </section>
+
+      <!-- 4 КАРТОЧКИ ПАСПОРТА МАРШРУТА -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder p-4 sm:p-5 shadow-soft dark:shadow-nightSoft flex flex-col gap-1.5">
+          <span class="w-10 h-10 rounded-xl bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent flex items-center justify-center text-lg">🥾</span>
+          <p class="text-xs font-bold uppercase tracking-wider text-moss dark:text-nightMuted mt-1">Протяжённость</p>
+          <p class="font-display font-extrabold text-lg text-forest dark:text-nightText">~2,5 км</p>
+          <p class="text-xs text-moss dark:text-nightMuted">Кольцевой маршрут</p>
+        </div>
+
+        <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder p-4 sm:p-5 shadow-soft dark:shadow-nightSoft flex flex-col gap-1.5">
+          <span class="w-10 h-10 rounded-xl bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent flex items-center justify-center text-lg">⏱️</span>
+          <p class="text-xs font-bold uppercase tracking-wider text-moss dark:text-nightMuted mt-1">Время в пути</p>
+          <p class="font-display font-extrabold text-lg text-forest dark:text-nightText">1,5–2 часа</p>
+          <p class="text-xs text-moss dark:text-nightMuted">6 тематических станций</p>
+        </div>
+
+        <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder p-4 sm:p-5 shadow-soft dark:shadow-nightSoft flex flex-col gap-1.5">
+          <span class="w-10 h-10 rounded-xl bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent flex items-center justify-center text-lg">🏛️</span>
+          <p class="text-xs font-bold uppercase tracking-wider text-moss dark:text-nightMuted mt-1">Точка старта</p>
+          <p class="font-display font-extrabold text-base sm:text-lg text-forest dark:text-nightText leading-snug">ул. Колхозная</p>
+          <p class="text-xs text-moss dark:text-nightMuted">Арка сельхозвыставки 1956 г.</p>
+        </div>
+
+        <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder p-4 sm:p-5 shadow-soft dark:shadow-nightSoft flex flex-col gap-1.5">
+          <span class="w-10 h-10 rounded-xl bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent flex items-center justify-center text-lg">🎒</span>
+          <p class="text-xs font-bold uppercase tracking-wider text-moss dark:text-nightMuted mt-1">Для кого</p>
+          <p class="font-display font-extrabold text-lg text-forest dark:text-nightText">1–11 классы</p>
+          <p class="text-xs text-moss dark:text-nightMuted">Круглогодично, пешком</p>
+        </div>
+      </section>
+
+      <!-- РАСКРЫВАШКИ «ПЕРЕД ПРОГУЛКОЙ» -->
+      <section id="before-walk" class="space-y-4 scroll-mt-20">
+        <div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-forest dark:text-nightText">Перед прогулкой</h2>
+          <p class="text-sm sm:text-base text-moss dark:text-nightMuted mt-1">Нажмите «+», чтобы раскрыть важную памятку перед выходом на тропу.</p>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Аккордеон 1 -->
+          <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft overflow-hidden">
+            <button
+              type="button"
+              onclick="toggleAccordion(this)"
+              class="w-full px-5 py-4 flex items-center justify-between gap-4 text-left hover:bg-milk dark:hover:bg-nightSoft/60 transition"
+            >
+              <span class="font-display font-bold text-base sm:text-lg text-forest dark:text-nightText flex items-center gap-2.5">
+                <span>🛡️</span> Правила поведения на ООПТ
+              </span>
+              <span class="acc-icon w-8 h-8 rounded-full bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent font-extrabold text-xl flex items-center justify-center shrink-0 transition">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 pb-5 pt-2 text-sm sm:text-base text-moss dark:text-nightMuted space-y-2 border-t border-cardBorder/60 dark:border-nightBorder">
+                  <p>Чистяковская роща — особо охраняемая природная территория (ООПТ). На маршруте <strong class="text-forest dark:text-nightText">строго запрещено</strong>:</p>
+                  <ul class="list-disc pl-5 space-y-1.5">
+                    <li>сходить с оборудованных дорожек и вытаптывать газоны;</li>
+                    <li>срывать цветы, листья с веток, ломать кустарники и повреждать кору деревьев;</li>
+                    <li>разводить костры и оставлять после себя любой мусор;</li>
+                    <li>шуметь вблизи гнездовий птиц и пугать обитателей рощи;</li>
+                    <li>въезжать на территорию на автотранспорте.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Аккордеон 2 -->
+          <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft overflow-hidden">
+            <button
+              type="button"
+              onclick="toggleAccordion(this)"
+              class="w-full px-5 py-4 flex items-center justify-between gap-4 text-left hover:bg-milk dark:hover:bg-nightSoft/60 transition"
+            >
+              <span class="font-display font-bold text-base sm:text-lg text-forest dark:text-nightText flex items-center gap-2.5">
+                <span>🧭</span> Что взять с собой
+              </span>
+              <span class="acc-icon w-8 h-8 rounded-full bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent font-extrabold text-xl flex items-center justify-center shrink-0 transition">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 pb-5 pt-2 text-sm sm:text-base text-moss dark:text-nightMuted space-y-2 border-t border-cardBorder/60 dark:border-nightBorder">
+                  <ul class="list-disc pl-5 space-y-1.5">
+                    <li><strong class="text-forest dark:text-nightText">Удобная обувь</strong> по погоде — прогулка длится 1,5–2 часа (~2,5 км).</li>
+                    <li><strong class="text-forest dark:text-nightText">Питьевая вода</strong> в многоразовой бутылке.</li>
+                    <li><strong class="text-forest dark:text-nightText">Заряженный телефон</strong> и наушники для аудиогида, чтобы не пугать птиц.</li>
+                    <li><strong class="text-forest dark:text-nightText">Дневник наблюдений и карандаш</strong> — для зарисовок, заметок и полевых измерений.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Аккордеон 3 -->
+          <div class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft overflow-hidden">
+            <button
+              type="button"
+              onclick="toggleAccordion(this)"
+              class="w-full px-5 py-4 flex items-center justify-between gap-4 text-left hover:bg-milk dark:hover:bg-nightSoft/60 transition"
+            >
+              <span class="font-display font-bold text-base sm:text-lg text-forest dark:text-nightText flex items-center gap-2.5">
+                <span>📜</span> Историческая справка о Чистяковской роще
+              </span>
+              <span class="acc-icon w-8 h-8 rounded-full bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent font-extrabold text-xl flex items-center justify-center shrink-0 transition">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 pb-5 pt-2 text-sm sm:text-base text-moss dark:text-nightMuted space-y-2 border-t border-cardBorder/60 dark:border-nightBorder leading-relaxed">
+                  <p>
+                    Роща заложена в <strong class="text-forest dark:text-nightText">1900 году</strong> по инициативе городского головы Екатеринодара
+                    <strong class="text-forest dark:text-nightText">Гавриила Степановича Чистякова</strong>. Под городской парк выделили 30 десятин земли (около 43,5 га),
+                    а первые деревья высаживали ученики городских школ и Кубанской учительской семинарии.
+                  </p>
+                  <p>
+                    В <strong class="text-forest dark:text-nightText">1923 году</strong> рощу переименовали в Первомайскую. В годы Великой Отечественной войны и оккупации Краснодара
+                    большая часть деревьев была вырублена, но позже парк восстановили и пополнили редкими породами.
+                  </p>
+                  <p>
+                    <strong class="text-forest dark:text-nightText">14 июля 1988 года</strong> роща получила статус памятника природы регионального значения (ООПТ, площадь 54,41 га),
+                    а в <strong class="text-forest dark:text-nightText">2008 году</strong> парку вернули историческое имя — Чистяковская роща.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ЦИФРОВОЙ АТЛАС РОЩИ -->
+      <section id="digital-atlas" class="space-y-5 scroll-mt-20">
+        <div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-forest dark:text-nightText">Цифровой атлас рощи</h2>
+          <p class="text-sm sm:text-base text-moss dark:text-nightMuted mt-1">Познакомьтесь с деревьями, краснокнижными видами и обитателями парка.</p>
+        </div>
+
+        <!-- Вкладки фильтрации атласа -->
+        <div class="flex flex-wrap gap-2" id="atlas-filters">
+          <button type="button" onclick="filterAtlas('all')" data-filter="all" class="atlas-filter-btn px-4 py-2.5 rounded-xl text-sm font-bold transition bg-sage dark:bg-nightAccent text-white dark:text-nightBg shadow-sm">
+            Все
+          </button>
+          <button type="button" onclick="filterAtlas('plants')" data-filter="plants" class="atlas-filter-btn px-4 py-2.5 rounded-xl text-sm font-bold transition bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder text-moss dark:text-nightMuted hover:bg-mintSoft dark:hover:bg-nightSoft">
+            🌳 Растения и деревья
+          </button>
+          <button type="button" onclick="filterAtlas('redbook')" data-filter="redbook" class="atlas-filter-btn px-4 py-2.5 rounded-xl text-sm font-bold transition bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder text-moss dark:text-nightMuted hover:bg-mintSoft dark:hover:bg-nightSoft">
+            📕 Красная книга
+          </button>
+          <button type="button" onclick="filterAtlas('fauna')" data-filter="fauna" class="atlas-filter-btn px-4 py-2.5 rounded-xl text-sm font-bold transition bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder text-moss dark:text-nightMuted hover:bg-mintSoft dark:hover:bg-nightSoft">
+            🐿️ Птицы и звери
+          </button>
+        </div>
+
+        <div id="atlas-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- ВСЕ АУДИОГИДЫ МАРШРУТА + ПРИЛОЖЕНИЯ-ПОМОЩНИКИ -->
+      <section id="all-audioguides" class="space-y-6 scroll-mt-20">
+        <div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-forest dark:text-nightText">Все аудиогиды маршрута</h2>
+          <p class="text-sm sm:text-base text-moss dark:text-nightMuted mt-1">
+            Настоящие записи с регулировкой скорости (0.5x – 2x) и плавной перемоткой. Также доступны прямо внутри каждой станции.
+          </p>
+        </div>
+
+        <div id="home-audioguides-list" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+
+        <!-- Приложения-помощники -->
+        <div class="bg-mintSoft/80 dark:bg-nightSoft/80 rounded-3xl border border-mintMid dark:border-nightBorder p-5 sm:p-6 space-y-4">
+          <div>
+            <h3 class="font-display font-extrabold text-lg sm:text-xl text-forest dark:text-nightText">📱 Приложения-помощники на тропе</h3>
+            <p class="text-sm text-moss dark:text-nightMuted mt-1">Пригодятся для распознавания деревьев по листьям, голосов птиц и виртуального тура.</p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <a href="https://identify.plantnet.org/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-nightCard hover:bg-milk dark:hover:bg-nightBg border border-cardBorder dark:border-nightBorder rounded-2xl p-3.5 text-center transition shadow-sm flex flex-col items-center gap-1">
+              <span class="text-xl">🌿</span>
+              <span class="font-bold text-sm text-forest dark:text-nightText">PlantNet</span>
+              <span class="text-[11px] text-moss dark:text-nightMuted">Определитель растений</span>
+            </a>
+            <a href="https://www.inaturalist.org/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-nightCard hover:bg-milk dark:hover:bg-nightBg border border-cardBorder dark:border-nightBorder rounded-2xl p-3.5 text-center transition shadow-sm flex flex-col items-center gap-1">
+              <span class="text-xl">🔍</span>
+              <span class="font-bold text-sm text-forest dark:text-nightText">iNaturalist</span>
+              <span class="text-[11px] text-moss dark:text-nightMuted">Наблюдения природы</span>
+            </a>
+            <a href="https://birdnet.cornell.edu/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-nightCard hover:bg-milk dark:hover:bg-nightBg border border-cardBorder dark:border-nightBorder rounded-2xl p-3.5 text-center transition shadow-sm flex flex-col items-center gap-1">
+              <span class="text-xl">🐦</span>
+              <span class="font-bold text-sm text-forest dark:text-nightText">BirdNET</span>
+              <span class="text-[11px] text-moss dark:text-nightMuted">Голоса птиц</span>
+            </a>
+            <a href="https://izi.travel/" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-nightCard hover:bg-milk dark:hover:bg-nightBg border border-cardBorder dark:border-nightBorder rounded-2xl p-3.5 text-center transition shadow-sm flex flex-col items-center gap-1">
+              <span class="text-xl">🎧</span>
+              <span class="font-bold text-sm text-forest dark:text-nightText">Izi.travel</span>
+              <span class="text-[11px] text-moss dark:text-nightMuted">Аудиотур по роще</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Финальный призыв -->
+      <section class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-6 sm:p-8 text-center space-y-4">
+        <h2 class="font-display font-extrabold text-2xl text-forest dark:text-nightText">Готовы исследовать Чистяковскую рощу?</h2>
+        <p class="text-moss dark:text-nightMuted text-sm sm:text-base max-w-xl mx-auto">
+          Откройте интерактивную карту маршрута, пройдите все 6 станций и получите персональную грамоту СОШ № 71.
+        </p>
+        <button
+          type="button"
+          onclick="openRouteView(1)"
+          class="px-8 py-4 rounded-2xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-display font-extrabold text-base sm:text-lg shadow-sage transition active:scale-95"
+        >
+          Открыть карту и начать маршрут →
+        </button>
+      </section>
+    </main>
+
+    <!-- Подвал с кнопками локальной подгрузки файлов и теста финала -->
+    <footer class="border-t border-cardBorder dark:border-nightBorder bg-white dark:bg-nightCard mt-10">
+      <div class="max-w-5xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-moss dark:text-nightMuted">
+        <div class="text-center md:text-left">
+          <p class="font-bold text-forest dark:text-nightText">Экологическая тропа «Чистяковская роща» • г. Краснодар</p>
+          <p class="mt-0.5">Памятник природы регионального значения • Экосовет МАОУ СОШ № 71</p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <button
+            type="button"
+            onclick="triggerLocalMediaPicker()"
+            class="px-3.5 py-2 rounded-xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold transition flex items-center gap-1.5 border border-mintMid dark:border-nightBorder"
+          >
+            <span>📂</span> Подгрузить локальные фото и аудио
+          </button>
+          <button
+            type="button"
+            onclick="triggerTestFinale()"
+            class="px-3.5 py-2 rounded-xl bg-milk hover:bg-amber-50 dark:bg-nightBg dark:hover:bg-nightSoft text-moss dark:text-nightMuted hover:text-amber-800 dark:hover:text-amber-300 font-bold transition border border-cardBorder dark:border-nightBorder"
+            title="Быстрая проверка финального экрана и генератора грамоты"
+          >
+            🧪 Тест финала (6/6)
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- =========================================================================
+       ВИД 2: ИГРОВОЙ ЭКРАН МАРШРУТА (РЕАЛЬНАЯ КАРТА 33111.jpg СВЕРХУ, СТАНЦИЯ СНИЗУ)
+       ========================================================================= -->
+  <div id="route-view" class="hidden min-h-screen flex flex-col">
+    <!-- Липкая верхняя панель с прогресс-баром и темой -->
+    <header class="sticky top-0 z-30 bg-white/95 dark:bg-nightCard/95 backdrop-blur-md border-b border-cardBorder dark:border-nightBorder shadow-sm">
+      <div class="max-w-4xl mx-auto px-3 sm:px-4 py-3 space-y-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <button
+            type="button"
+            onclick="openHomeView()"
+            class="px-3 py-2 rounded-xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold text-xs sm:text-sm transition flex items-center gap-1.5"
+          >
+            <span>←</span>
+            <span>Главная и Атлас</span>
+          </button>
+
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <!-- Кнопка награды (разблокируется после 6/6) -->
+            <button
+              type="button"
+              id="btn-header-reward"
+              onclick="openRewardView()"
+              class="hidden px-3 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-forest font-extrabold text-xs sm:text-sm shadow-sm transition active:scale-95"
+            >
+              🏆 Награда
+            </button>
+
+            <button
+              type="button"
+              onclick="toggleTheme()"
+              class="theme-toggle-btn px-2.5 sm:px-3 py-2 rounded-xl border border-cardBorder dark:border-nightBorder bg-milk dark:bg-nightBg hover:bg-mintSoft dark:hover:bg-nightSoft text-forest dark:text-nightText text-xs sm:text-sm font-bold transition flex items-center gap-1"
+              title="Переключить тему"
+            >
+              <span class="theme-icon">🌙</span>
+              <span class="hidden sm:inline theme-label">Тёмная</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="openResetModal()"
+              class="px-2.5 sm:px-3 py-2 rounded-xl border border-cardBorder dark:border-nightBorder hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-700 dark:hover:text-red-300 hover:border-red-200 dark:hover:border-red-800 text-moss dark:text-nightMuted font-semibold text-xs sm:text-sm transition"
+              title="Сбросить прогресс маршрута"
+            >
+              Сброс
+            </button>
+          </div>
+        </div>
+
+        <!-- Шкала прогресса -->
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-xs font-bold">
+            <span class="text-forest dark:text-nightText">Прогресс маршрута</span>
+            <span id="progress-label" class="text-sageDark dark:text-nightAccent">Пройдено 0 из 6 станций</span>
+          </div>
+          <div class="w-full h-2.5 bg-mintSoft dark:bg-nightBg rounded-full overflow-hidden border border-mintMid/60 dark:border-nightBorder">
+            <div id="progress-bar" class="h-full bg-sage dark:bg-nightAccent rounded-full transition-all duration-500 ease-out" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-4 py-5 space-y-6">
+      <!-- ИНТЕРАКТИВНАЯ КАРТА ЧИСТЯКОВСКОЙ РОЩИ (33111.jpg) — ВСЕГДА СВЕРХУ -->
+      <section id="interactive-map-section" class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-4 sm:p-5 space-y-3.5 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="font-display font-extrabold text-lg sm:text-xl text-forest dark:text-nightText flex items-center gap-2">
+              <span>🗺️</span> Интерактивная карта Чистяковской рощи
+            </h2>
+            <p class="text-xs sm:text-sm text-moss dark:text-nightMuted">Нажмите на точку от 1 до 6 — карточки станций и задания откроются сразу под картой.</p>
+          </div>
+          <div class="flex items-center gap-3 text-[11px] font-bold text-moss dark:text-nightMuted">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-sage dark:bg-nightAccent inline-block"></span> Пройдено</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-forest dark:bg-amber-400 inline-block"></span> Текущая</span>
+          </div>
+        </div>
+
+        <!-- Быстрая карточка-превью выбранной станции на карте -->
+        <div id="map-station-preview" class="rounded-2xl bg-milk dark:bg-nightBg border border-cardBorder dark:border-nightBorder p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"></div>
+
+        <!-- Контейнер с реальным изображением карты 33111.jpg -->
+            <img
+              id="trail-map-img"
+              alt="Карта экологической тропы Чистяковская роща"
+              class="w-full h-auto block rounded-[18px]"
+            />
+
+            <!-- Тонкая пунктирная SVG-линия маршрута поверх реальной карты -->
+            <svg
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              class="absolute inset-0 w-full h-full pointer-events-none"
+              aria-hidden="true"
+            >
+              <!-- Белая обводка для читаемости поверх зелёной карты -->
+              <polyline
+                points="66,71 66,45 81,25 46,22 19,21 45,52 66,71"
+                fill="none"
+                stroke="rgba(255,255,255,0.88)"
+                stroke-width="1.35"
+                stroke-dasharray="2.4 1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <!-- Основной зелёный пунктир маршрута -->
+              <polyline
+                points="66,71 66,45 81,25 46,22 19,21 45,52 66,71"
+                fill="none"
+                stroke="#2E7D4F"
+                stroke-width="0.75"
+                stroke-dasharray="2.4 1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <!-- Слой кликабельных пинов 1..6 -->
+            <div id="map-pins-layer" class="absolute inset-0"></div>
+          </div>
+        </div>
+
+        <!-- Быстрая строка переключения станций -->
+        <div id="station-quick-pills" class="flex items-center gap-2 overflow-x-auto pb-1"></div>
+      </section>
+
+      <!-- ПАНЕЛЬ АКТИВНОЙ СТАНЦИИ (ОТКРЫВАЕТСЯ ПОД КАРТОЙ) -->
+      <section id="station-panel" class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-5 sm:p-8 space-y-6 animate-fade-up"></section>
+    </main>
+
+    <!-- Компактный служебный подвал на экране маршрута -->
+    <footer class="border-t border-cardBorder dark:border-nightBorder bg-white dark:bg-nightCard mt-8">
+      <div class="max-w-4xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-2 text-xs text-moss dark:text-nightMuted">
+        <span>Экотропа «Чистяковская роща»</span>
+        <div class="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onclick="triggerLocalMediaPicker()"
+            class="px-3 py-1.5 rounded-xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold transition"
+          >
+            📂 Подгрузить локальные фото и аудио
+          </button>
+          <button
+            type="button"
+            onclick="triggerTestFinale()"
+            class="px-3 py-1.5 rounded-xl border border-cardBorder dark:border-nightBorder hover:bg-amber-50 dark:hover:bg-nightSoft font-bold transition"
+          >
+            🧪 Тест финала (6/6)
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- =========================================================================
+       ВИД 3: ОТДЕЛЬНАЯ СТРАНИЦА НАГРАДЫ И ГЕНЕРАТОРА ГРАМОТЫ (33119.jpg)
+       ========================================================================= -->
+  <div id="reward-view" class="hidden min-h-screen flex flex-col">
+    <header class="sticky top-0 z-30 bg-white/95 dark:bg-nightCard/95 backdrop-blur-md border-b border-cardBorder dark:border-nightBorder shadow-sm">
+      <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onclick="openTrailView()"
+          class="px-3.5 py-2 rounded-xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold text-xs sm:text-sm transition flex items-center gap-1.5"
+        >
+          <span>←</span>
+          <span>Вернуться к карте</span>
+        </button>
+
+        <span class="font-display font-extrabold text-sm sm:text-base text-forest dark:text-nightText hidden sm:inline">
+          🏆 Награда участника экотропы
+        </span>
+
+        <button
+          type="button"
+          onclick="toggleTheme()"
+          class="theme-toggle-btn px-3 py-2 rounded-xl border border-cardBorder dark:border-nightBorder bg-milk dark:bg-nightBg hover:bg-mintSoft dark:hover:bg-nightSoft text-forest dark:text-nightText text-xs sm:text-sm font-bold transition flex items-center gap-1.5"
+        >
+          <span class="theme-icon">🌙</span>
+          <span class="hidden sm:inline theme-label">Тёмная</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6 sm:py-10 space-y-6">
+      <!-- Карточка ввода Фамилии и Имени -->
+      <section class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-5 sm:p-8 space-y-5 animate-fade-up">
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div id="reward-mascot-small" class="shrink-0"></div>
+          <div id="reward-congrat-badge-box" class="shrink-0"></div>
+          <div class="text-center sm:text-left space-y-1">
+            <span class="inline-block px-3 py-1 rounded-full bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent text-xs font-extrabold">
+              🎉 Поздравляем с прохождением маршрута!
+            </span>
+            <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-forest dark:text-nightText">
+              Оформите вашу именную грамоту
+            </h1>
+            <p class="text-sm text-moss dark:text-nightMuted">
+              Введите <strong>Фамилию и Имя</strong> — надпись «ученик(ца) СОШ № 71 города Краснодара» уже оформлена на бланке грамоты.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label for="cert-fullname" class="block text-sm font-extrabold text-forest dark:text-nightText">
+            Фамилия и Имя участника
+          </label>
+          <input
+            id="cert-fullname"
+            type="text"
+            maxlength="48"
+            placeholder="Например: Иванов Александр"
+            oninput="updateCertificateLivePreview()"
+            class="w-full px-4 py-3.5 rounded-2xl border-2 border-cardBorder dark:border-nightBorder bg-milk dark:bg-nightBg focus:bg-white dark:focus:bg-nightCard focus:outline-none focus:border-sage dark:focus:border-nightAccent text-base sm:text-lg font-bold text-forest dark:text-nightText transition"
+          />
+        </div>
+
+        <!-- Кнопки скачивания и печати -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-1">
+          <button
+            type="button"
+            onclick="downloadCertificatePNG()"
+            class="flex-1 py-4 px-6 rounded-2xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-display font-extrabold text-base sm:text-lg shadow-sage transition active:scale-[0.99] flex items-center justify-center gap-2"
+          >
+            <span>⬇️ Скачать грамоту (PNG)</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="window.print()"
+            class="px-6 py-4 rounded-2xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold text-sm sm:text-base border border-mintMid dark:border-nightBorder transition flex items-center justify-center gap-2"
+          >
+            <span>🖨️ Распечатать / PDF</span>
+          </button>
+        </div>
+
+        <!-- Резервный блок при SecurityError на file:// (показывается только если браузер заблокировал экспорт canvas) -->
+        <div id="cert-cors-helper" class="hidden rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700/60 p-4 space-y-3 text-sm text-amber-950 dark:text-amber-200 animate-fade-up">
+          <p class="font-bold">
+            Браузер ограничил прямое скачивание картинки в локальном режиме (<code>file://</code>). Выберите один из двух быстрых способов:
+          </p>
+          <div class="flex flex-col sm:flex-row gap-2.5">
+            <button
+              type="button"
+              onclick="document.getElementById('cert-file-fallback-input').click()"
+              class="flex-1 py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold transition"
+            >
+              📂 Выбрать файл 33112.jpg для скачивания PNG
+            </button>
+            <button
+              type="button"
+              onclick="window.print()"
+              class="flex-1 py-2.5 px-4 rounded-xl bg-white dark:bg-nightCard border border-amber-300 dark:border-amber-700 font-bold text-forest dark:text-nightText transition"
+            >
+              🖨️ Распечатать / Сохранить в PDF
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ЖИВОЕ ПРЕВЬЮ ГРАМОТЫ 33112.jpg -->
+      <section class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-4 sm:p-6 space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <h2 class="font-display font-extrabold text-lg text-forest dark:text-nightText">Предпросмотр грамоты</h2>
+          <span class="text-xs font-semibold text-moss dark:text-nightMuted">Обновляется в реальном времени</span>
+        </div>
+
+        <!-- Контейнер грамоты: точное наложение имени ровно над коричневой линией (y = 44.1%, текст на y = 42.3%) -->
+        <div id="cert-printable-area" class="relative w-full max-w-xl mx-auto rounded-2xl overflow-hidden border border-cardBorder dark:border-nightBorder shadow-lg bg-[#FDFBF2]">
+          <img
+            id="cert-preview-img"
+            alt="Грамота участника экотропы Чистяковская роща"
+            class="w-full h-auto block select-none"
+          />
+          <!-- Живой текст ФИО на грамоте -->
+          <div
+            id="cert-live-name-overlay"
+            style="position: absolute; left: 50%; top: 42.3%; transform: translate(-50%, -100%); width: 72%; text-align: center; font-family: Georgia, 'Times New Roman', serif; font-weight: 700; color: #3B2415; line-height: 1.05; white-space: nowrap; pointer-events: none;"
+          >
+            Иванов Александр
+          </div>
+        </div>
+
+        <!-- Скрытый полноразмерный Canvas (1792x2400) для генерации PNG -->
+        <canvas id="certificate-export-canvas" width="1792" height="2400" class="hidden"></canvas>
+      </section>
+    </main>
+  </div>
+
+  <!-- =========================================================================
+       ПОЛНОЭКРАННОЕ ЗАТЕМНЁННОЕ ПОЗДРАВЛЕНИЕ (#finale-overlay)
+       ========================================================================= -->
+  <div
+    id="finale-overlay"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
+    style="background-color: rgba(8, 14, 10, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
+  >
+    <div class="max-w-xl w-full text-center space-y-5 py-6 px-4 animate-fade-up relative">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-nightAccent/20 border border-nightAccent/50 text-nightAccent text-xs font-extrabold uppercase tracking-wider">
+        🏆 Все 6 станций пройдены!
+      </div>
+
+      <!-- Финальный маскот с кубком (./img/33115.jpg) + фрагмент поздравления (./img/33112.jpg) -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div id="victory-mascot-block" class="flex justify-center"></div>
+        <div id="finale-congrat-card" class="flex justify-center"></div>
+      </div>
+
+      <div class="space-y-2.5">
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white leading-tight drop-shadow">
+          Поздравляем! Вы закончили игру — всё пройдено!
+        </h2>
+        <p class="text-nightMuted text-base sm:text-lg leading-relaxed max-w-md mx-auto">
+          Молодцы, вы отлично справились со всеми заданиями экотропы! Давайте распечатаем вам именную грамоту!
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <button
+          type="button"
+          onclick="openRewardView()"
+          class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-nightAccent hover:bg-sage text-nightBg font-display font-extrabold text-lg shadow-sage transition transform hover:scale-[1.03] active:scale-95"
+        >
+          Забрать награду →
+        </button>
+        <button
+          type="button"
+          onclick="closeVictoryModal()"
+          class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition"
+        >
+          Вернуться к карте
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ СБРОСА (БЕЗ confirm())
+       ========================================================================= -->
+  <div id="modal-reset" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-nightCard rounded-3xl border border-cardBorder dark:border-nightBorder max-w-sm w-full p-6 shadow-2xl space-y-4 text-center animate-fade-up">
+      <div class="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 mx-auto flex items-center justify-center text-2xl">🔄</div>
+      <h3 class="font-display font-extrabold text-xl text-forest dark:text-nightText">Сбросить прогресс?</h3>
+      <p class="text-sm text-moss dark:text-nightMuted">Все галочки пройденных станций очистятся, и вы сможете пройти экотропу заново.</p>
+      <div class="flex gap-2.5 pt-1">
+        <button type="button" onclick="closeResetModal()" class="flex-1 py-3 rounded-xl bg-mintSoft hover:bg-mintMid dark:bg-nightSoft dark:hover:bg-nightBorder text-forest dark:text-nightText font-bold text-sm transition">
+          Отмена
+        </button>
+        <button type="button" onclick="confirmResetProgress()" class="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-sm transition">
+          Да, сбросить
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       JAVASCRIPT: КОНФИГУРАЦИЯ МЕДИА, АУДИОПЛЕЕР, 6 СТАНЦИЙ, ГРАМОТА, ТЕМЫ
+       ========================================================================= -->
+  <script>
+    /* =========================================================================
+       1. КОНФИГУРАЦИЯ РЕАЛЬНЫХ ФАЙЛОВ ПОЛЬЗОВАТЕЛЯ (В КОРНЕ РЯДОМ С index.html)
+       ========================================================================= */
+    const MEDIA_CONFIG = {
+      map: {
+        primary: './33111.jpg',
+        candidates: ['./33111.jpg'],
+        fallback: '33111.jpg',
+      },
+      certificate: {
+        primary: './33112.jpg',
+        candidates: ['./33112.jpg'],
+        fallback: '33112.jpg',
+      },
+      mascots: {
+        greeting: {
+          primary: './33116.jpg',
+          candidates: ['./33116.jpg'],
+          fallback: '33116.jpg',
+        },
+        questPassed: {
+          primary: './33113.jpg',
+          candidates: ['./33113.jpg'],
+          fallback: '33113.jpg',
+        },
+        errorSad: {
+          primary: './33114.jpg',
+          candidates: ['./33114.jpg'],
+          fallback: '33114.jpg',
+        },
+        finalTrophy: {
+          primary: './33115.jpg',
+          candidates: ['./33115.jpg'],
+          fallback: '33115.jpg',
+        },
+      },
+      audio: {
+        1: {
+          primary: './станция1_1.mp3',
+          candidates: ['./станция1_1.mp3'],
+          fallback: 'станция1_1.mp3',
+        },
+        2: {
+          primary: './станция2_1.mp3',
+          candidates: ['./станция2_1.mp3'],
+          fallback: 'станция2_1.mp3',
+        },
+        3: {
+          primary: './станция3_1.mp3',
+          candidates: ['./станция3_1.mp3'],
+          fallback: 'станция3_1.mp3',
+        },
+        4: {
+          primary: './станция4_1.mp3',
+          candidates: ['./станция4_1.mp3'],
+          fallback: 'станция4_1.mp3',
+        },
+        5: {
+          primary: './станция5_1.mp3',
+          candidates: ['./станция5_1.mp3'],
+          fallback: 'станция5_1.mp3',
+        },
+        6: {
+          primary: './станция6_1.mp3',
+          candidates: ['./станция6_1.mp3'],
+          fallback: 'станция6_1.mp3',
+        },
+      },
+    };
+
+    // Хранилище локально подгруженных файлов (через <input type="file" multiple>)
+    // Ключ — нормализованное имя файла (без пробелов/регистра или точное)
+    const LOCAL_FILE_URLS = {};
+    // DataURL для грамоты (если выбран файл через локальный загрузчик, чтобы скачивание работало без CORS)
+    let LOCAL_CERT_DATA_URL = null;
+
+    const CURRENT_YEAR = new Date().getFullYear();
+    const GROVE_AGE = CURRENT_YEAR - 1900;
+
+    function normalizeMediaKey(name) {
+      return String(name || '')
+        .toLowerCase()
+        .replace(/\\/g, '/')
+        .split('/')
+        .pop()
+        .replace(/\s+/g, '');
+    }
+
+    function findLocalMediaUrl(entry) {
+      if (!entry) return null;
+      const candidates = [entry.fallback, ...(entry.candidates || [])];
+      for (const cand of candidates) {
+        const base = String(cand || '').toLowerCase().split('/').pop();
+        if (LOCAL_FILE_URLS[base]) return LOCAL_FILE_URLS[base];
+        const norm = normalizeMediaKey(cand);
+        if (LOCAL_FILE_URLS[norm]) return LOCAL_FILE_URLS[norm];
+      }
+      return null;
+    }
+
+    /**
+     * Возвращает URL ресурса: сначала проверяет локально загруженный файл,
+     * затем primary-путь в корне репозитория (./33111.jpg, ./станция1_1.mp3 и т.д.).
+     */
+    function getMediaUrl(entry) {
+      if (!entry) return '';
+      const localUrl = findLocalMediaUrl(entry);
+      if (localUrl) return localUrl;
+      return entry.primary;
+    }
+
+    function getMediaCandidates(entry) {
+      if (!entry) return [];
+      const localUrl = findLocalMediaUrl(entry);
+      if (localUrl) return [localUrl];
+      return [entry.primary];
+    }
+
+    /**
+     * Обработчик ошибки загрузки <img>: скрывает сломанную иконку, не плодя лишних запросов.
+     */
+    function handleImgFallback(imgEl) {
+      imgEl.classList.add('opacity-0');
+    }
+
+    /**
+     * Формирует HTML-тег <img> с прямым корневым путём
+     */
+    function buildManagedImgHTML(entry, alt, className, extraAttrs = '') {
+      const src = getMediaUrl(entry);
+      return `<img src="${src}" onerror="handleImgFallback(this)" alt="${alt}" class="${className}" ${extraAttrs} />`;
+    }
+
+    function findLocalMediaUrl(entry) {
+      if (!entry) return null;
+      const candidates = [entry.fallback, ...(entry.candidates || [])];
+      for (const cand of candidates) {
+        const base = String(cand || '').toLowerCase().split('/').pop();
+        if (LOCAL_FILE_URLS[base]) return LOCAL_FILE_URLS[base];
+        const norm = normalizeMediaKey(cand);
+        if (LOCAL_FILE_URLS[norm]) return LOCAL_FILE_URLS[norm];
+      }
+      return null;
+    }
+
+    /**
+     * Возвращает URL ресурса: сначала проверяет локально загруженный файл,
+     * затем primary-путь (./img/... или ./audio/...).
+     */
+    function getMediaUrl(entry) {
+      if (!entry) return '';
+      const localUrl = findLocalMediaUrl(entry);
+      if (localUrl) return localUrl;
+      return entry.primary;
+    }
+
+    function getMediaCandidates(entry) {
+      if (!entry) return [];
+      const localUrl = findLocalMediaUrl(entry);
+      if (localUrl) return [localUrl];
+      const list = [entry.primary, ...(entry.candidates || []), entry.fallback].filter(Boolean);
+      return [...new Set(list)];
+    }
+
+    /**
+     * Умный fallback для <img>: перебирает список кандидатов из ./img/... и корня,
+     * а при полном отсутствии файла скрывает битую иконку.
+     */
+    function handleImgFallback(imgEl) {
+      let candidates = [];
+      try {
+        candidates = JSON.parse(imgEl.dataset.candidates || '[]');
+      } catch (e) {
+        candidates = [];
+      }
+      let idx = parseInt(imgEl.dataset.candIdx || '0', 10);
+      idx += 1;
+      if (idx < candidates.length) {
+        imgEl.dataset.candIdx = String(idx);
+        imgEl.src = candidates[idx];
+        return;
+      }
+      imgEl.classList.add('opacity-0');
+    }
+
+    /**
+     * Формирует HTML-тег <img> с умным fallback по кандидатам
+     */
+    function buildManagedImgHTML(entry, alt, className, extraAttrs = '') {
+      const candidates = getMediaCandidates(entry);
+      const src = candidates[0] || entry.primary;
+      const encoded = JSON.stringify(candidates).replace(/"/g, '&quot;');
+      return `<img src="${src}" data-candidates="${encoded}" data-cand-idx="0" onerror="handleImgFallback(this)" alt="${alt}" class="${className}" ${extraAttrs} />`;
+    }
+
+    /**
+     * Тост-уведомление внизу экрана
+     */
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('app-toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.add('hidden'), 3600);
+    }
+
+    /**
+     * Подгрузка локальных фото и аудио через <input type="file" multiple>
+     */
+    function triggerLocalMediaPicker() {
+      const input = document.getElementById('local-media-input');
+      input.value = '';
+      input.click();
+    }
+
+    function handleLocalMediaUpload(event) {
+      const files = Array.from(event.target.files || []);
+      if (!files.length) return;
+
+      let loadedCount = 0;
+      files.forEach((file) => {
+        const exactKey = file.name.toLowerCase();
+        const normKey = normalizeMediaKey(file.name);
+        if (LOCAL_FILE_URLS[exactKey]) {
+          try { URL.revokeObjectURL(LOCAL_FILE_URLS[exactKey]); } catch (e) {}
+        }
+        const url = URL.createObjectURL(file);
+        LOCAL_FILE_URLS[exactKey] = url;
+        LOCAL_FILE_URLS[normKey] = url;
+        loadedCount++;
+
+        // Если среди файлов есть грамота 33112.jpg — читаем её в DataURL для экспорта PNG
+        if (normKey === '33112.jpg' || normKey === '33112.png') {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            LOCAL_CERT_DATA_URL = e.target.result;
+            refreshCertificatePreviewImage();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Перезагружаем аудиоплееры, карту, маскотов и грамоту с новыми файлами
+      stopAllAudioPlayers();
+      AudioManager.clearAll();
+      refreshAllMediaInUI();
+      showToast(`Подгружено файлов: ${loadedCount}. Фото и аудио обновлены!`);
+    }
+
+    function refreshAllMediaInUI() {
+      renderHomePage();
+      refreshMapImage();
+      refreshCertificatePreviewImage();
+      if (appState.currentView === 'route') {
+        updateProgressUI();
+        renderMapPins();
+        renderStationPanel();
+      }
+      if (appState.currentView === 'reward') {
+        renderRewardMascot();
+        updateCertificateLivePreview();
+      }
+    }
+
+    function refreshMapImage() {
+      const img = document.getElementById('trail-map-img');
+      if (!img) return;
+      img.classList.remove('opacity-0');
+      img.onerror = () => handleImgFallback(img);
+      img.src = getMediaUrl(MEDIA_CONFIG.map);
+    }
+
+    function refreshCertificatePreviewImage() {
+      const img = document.getElementById('cert-preview-img');
+      if (!img) return;
+      if (LOCAL_CERT_DATA_URL) {
+        img.classList.remove('opacity-0');
+        img.onerror = null;
+        img.src = LOCAL_CERT_DATA_URL;
+        return;
+      }
+      img.classList.remove('opacity-0');
+      img.onerror = () => handleImgFallback(img);
+      img.src = getMediaUrl(MEDIA_CONFIG.certificate);
+    }
+
+    function refreshCertificatePreviewImage() {
+      const img = document.getElementById('cert-preview-img');
+      if (!img) return;
+      if (LOCAL_CERT_DATA_URL) {
+        img.dataset.candidates = '[]';
+        img.dataset.candIdx = '0';
+        img.classList.remove('opacity-0');
+        img.onerror = null;
+        img.src = LOCAL_CERT_DATA_URL;
+        return;
+      }
+      const candidates = getMediaCandidates(MEDIA_CONFIG.certificate);
+      img.dataset.candidates = JSON.stringify(candidates);
+      img.dataset.candIdx = '0';
+      img.classList.remove('opacity-0');
+      img.onerror = () => handleImgFallback(img);
+      img.src = candidates[0] || MEDIA_CONFIG.certificate.primary;
+    }
+
+    /* =========================================================================
+       2. СВЕТЛАЯ И ТЁМНАЯ ТЕМА (С СОХРАНЕНИЕМ В localStorage)
+       ========================================================================= */
+    const THEME_STORAGE_KEY = 'chistyakovskaya_theme';
+
+    function getCurrentTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+
+    function setTheme(mode) {
+      const isDark = mode === 'dark';
+      document.documentElement.classList.toggle('dark', isDark);
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, mode);
+      } catch (e) {}
+      syncThemeButtonsUI();
+    }
+
+    function toggleTheme() {
+      setTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
+    }
+
+    function syncThemeButtonsUI() {
+      const isDark = getCurrentTheme() === 'dark';
+
+      // Обновляем компактные кнопки в шапках
+      document.querySelectorAll('.theme-toggle-btn').forEach((btn) => {
+        const icon = btn.querySelector('.theme-icon');
+        const label = btn.querySelector('.theme-label');
+        if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+        if (label) label.textContent = isDark ? 'Светлая' : 'Тёмная';
+      });
+
+      // Обновляем заметный переключатель на главном экране
+      document.querySelectorAll('.theme-pill-light').forEach((el) => {
+        el.className = `theme-pill-light px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1 ${
+          !isDark
+            ? 'bg-sage text-white shadow-sm'
+            : 'text-nightMuted hover:text-nightText'
+        }`;
+      });
+      document.querySelectorAll('.theme-pill-dark').forEach((el) => {
+        el.className = `theme-pill-dark px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1 ${
+          isDark
+            ? 'bg-nightAccent text-nightBg shadow-sm'
+            : 'text-moss hover:text-forest'
+        }`;
+      });
+    }
+
+    /* =========================================================================
+       3. ДАННЫЕ ЦИФРОВОГО АТЛАСА И ВСЕХ 6 СТАНЦИЙ (С ТОЧНЫМИ КООРДИНАТАМИ КАРТЫ)
+       ========================================================================= */
+    const ATLAS_ITEMS = [
+      {
+        id: 'oak',
+        icon: '🌳',
+        name: 'Дуб черешчатый',
+        category: 'plants',
+        badge: 'Вековое дерево',
+        badgeColor: 'bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent',
+        short: 'Один из первых видов, высаженных школьниками в 1900 году. Отдельным дубам в роще более 100 лет.',
+        details: 'Мощное дерево с раскидистой кроной и глубоко трещиноватой корой. Возраст дуба в парке можно приблизительно оценить, измерив обхват ствола на высоте 1,3 м и разделив значение в сантиметрах на 2,5.',
+      },
+      {
+        id: 'ash',
+        icon: '🌿',
+        name: 'Ясень (обыкновенный, зелёный)',
+        category: 'plants',
+        badge: 'Преобладающая порода',
+        badgeColor: 'bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent',
+        short: 'Основная древесная порода Чистяковской рощи, формирующая высокий зелёный полог аллей.',
+        details: 'В роще растут ясень обыкновенный, зелёный и американский. Деревьям иногда угрожает вредитель — чёрный ясеневый пилильщик, численность которого помогают сдерживать дятлы.',
+      },
+      {
+        id: 'yew',
+        icon: '🌲',
+        name: 'Тис ягодный',
+        category: 'redbook',
+        badge: 'Красная книга • Ядовит',
+        badgeColor: 'bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/60',
+        short: 'Редкое реликтовое хвойное растение, занесённое в Красную книгу региона. Встречается в дендрарии рощи.',
+        details: 'ВНИМАНИЕ: все части тиса ягодного (хвоя, кора, семена внутри красных шишкоягод) содержат токсичные алкалоиды и ядовиты! Растение нельзя срывать и пробовать на вкус.',
+      },
+      {
+        id: 'christmas-tree',
+        icon: '🍊',
+        name: '«Рождественское дерево»',
+        category: 'plants',
+        badge: 'Аромат цитруса',
+        badgeColor: 'bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60',
+        short: 'Удивительный обитатель участка у эколого-биологического центра, источающий яркий цитрусовый запах.',
+        details: 'Во время экскурсий сотрудники Управления ООПТ знакомят школьников с этим ароматным деревом. Попробуйте закрыть глаза рядом с ним на Станции 3 и запомнить его необычный запах.',
+      },
+      {
+        id: 'bat',
+        icon: '🦇',
+        name: 'Гигантская вечерница',
+        category: 'redbook',
+        badge: 'Красная книга',
+        badgeColor: 'bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/60',
+        short: 'Редкая летучая мышь из Красной книги, официально отмеченная среди 14 видов млекопитающих рощи.',
+        details: 'Крупнейшая летучая мышь Европы. Селится в дуплах старых деревьев, поэтому сохранение вековых дубов и ясеней в Чистяковской роще жизненно важно для этого вида.',
+      },
+      {
+        id: 'woodpecker',
+        icon: '🐦',
+        name: 'Дятел',
+        category: 'fauna',
+        badge: 'Санитар леса',
+        badgeColor: 'bg-sky-50 dark:bg-sky-950/50 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60',
+        short: 'Незаменимый защитник деревьев рощи от насекомых-вредителей, живущих под корой.',
+        details: 'Дятлы регулируют численность опасного вредителя — чёрного ясеневого пилильщика, спасая ясени парка от ослабления. Их стук и голоса легко услышать на Станции 4.',
+      },
+      {
+        id: 'squirrel',
+        icon: '🐿️',
+        name: 'Белка обыкновенная',
+        category: 'fauna',
+        badge: 'Обитатель крон',
+        badgeColor: 'bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent',
+        short: 'Любимица посетителей парка. Прячет запасы жёлудей и орехов, помогая роще обновляться.',
+        details: 'Часть закопанных белкой семян остаётся нетронутой и весной прорастает — так белки естественным образом участвуют в распространении семян и возобновлении древесных пород.',
+      },
+    ];
+
+    const STATIONS_DATA = [
+      {
+        id: 1,
+        icon: '🏛️',
+        title: 'Ворота в историю',
+        shortTitle: 'Ворота',
+        location: 'Главный вход со стороны ул. Колхозной, арка сельхозвыставки 1956 года',
+        mapX: 66,
+        mapY: 71,
+        mascotGreeting: 'Добро пожаловать в Чистяковскую рощу! Мы стоим у легендарной арки на ул. Колхозной. Послушай аудиогид, выбери свой класс и выполни первое задание!',
+        moreInfo:
+          'Роща заложена в 1900 году по инициативе городского головы Екатеринодара Гавриила Чистякова. Под парк выделили 30 десятин земли (около 43,5 га). Первые деревья — дуб черешчатый, дуб Гартвиса, ясень обыкновенный, берёзу бородавчатую, сосну обыкновенную и платан западный — сажали ученики городских школ и Кубанской учительской семинарии. В 1923 году роща стала Первомайской, 14 июля 1988 года получила статус ООПТ (54,41 га), а в 2008 году ей вернули историческое имя.',
+        hint: {
+          junior: 'Посмотри вверх на арку: по бокам стоят высокие колонны, а сверху их соединяет полукруг. И не забудь посчитать реальные шаги до первого дерева!',
+          middle: `Возраст рощи = ${CURRENT_YEAR} − 1900 = ${GROVE_AGE} лет. В 1 гектаре ровно 10 000 м², значит 54,41 × 10 000 = 544 100 м².`,
+          senior: 'Вспомните, зачем городу в конце XX века понадобилось юридически защитить зелёный массив от застройки и вырубки, сохранив его историю и биоразнообразие.',
+        },
+        nextDirection: 'Двигайтесь прямо вверх по Центральной аллее к самым старым деревьям рощи.',
+      },
+      {
+        id: 2,
+        icon: '🌳',
+        title: 'Вековые деревья',
+        shortTitle: 'Деревья',
+        location: 'Центральная аллея, участок с наиболее старыми насаждениями',
+        mapX: 66,
+        mapY: 45,
+        mascotGreeting: 'Оглянись вокруг — некоторым из этих великанов уже больше ста лет! Включай аудиогид и узнай секреты вековых деревьев.',
+        moreInfo:
+          'На территории рощи растёт более 30 видов деревьев и кустарников. Преобладает ясень (обыкновенный, зелёный, американский), также встречаются столетние дубы черешчатые, чёрный орех, конский каштан, сосна, липа, клён, берёза и платан. В советские годы коллекцию обогатили редкими породами: дубом пирамидальным и красным, тюльпанным деревом, магнолией, черёмухой виргинской и самшитом колхидским.',
+        hint: {
+          junior: 'По правилам ООПТ срывать листья с веток нельзя — собираем только опавшие! А самый крупный из трёх листьев — лист платана.',
+          middle: 'Разделите 250 на 2,5: получится ровно 100 лет. А у дуба черешчатого глубоко трещиноватая кора и лопастные листья.',
+          senior: 'В Чистяковской роще преобладает ясень. Ослабленным деревьям помогают санитарная обрезка сухих ветвей, полив в засуху и защита приствольного круга от вытаптывания.',
+        },
+        nextDirection: 'Сворачивайте правее к участку с редкими и краснокнижными растениями.',
+      },
+      {
+        id: 3,
+        icon: '📕',
+        title: 'Краснокнижная',
+        shortTitle: 'Красная книга',
+        location: 'Участок с редкими и охраняемыми растениями у эколого-биологического центра',
+        mapX: 81,
+        mapY: 25,
+        mascotGreeting: 'Тсс… Здесь живут настоящие ботанические сокровища! Послушай рассказ о редких растениях и разгадай задания станции.',
+        moreInfo:
+          'В дендрарии на территории рощи произрастает более 300 видов растений, включая виды из Красной книги. Здесь можно увидеть редкий тис ягодный (он ядовит и охраняется государством) и необычное «Рождественское дерево», которое источает яркий аромат цитруса.',
+        hint: {
+          junior: '«Рождественское дерево» пахнет цитрусом (как мандарин или лимон). А правильный экознак запрещает рвать цветы и ломать ветки.',
+          middle: 'Красная книга — официальный список редких и находящихся под угрозой исчезновения видов. Тис ягодный нельзя ломать и пробовать его красные ягоды.',
+          senior: 'На информационной табличке обязательно указывают название вида, охранный статус, краткое описание/QR-код и правила поведения рядом с растением.',
+        },
+        nextDirection: 'Пройдите левее к густым кронам — там находится «Птичий городок».',
+      },
+      {
+        id: 4,
+        icon: '🐦',
+        title: 'Птичий городок',
+        shortTitle: 'Птицы',
+        location: 'Участок с наибольшим скоплением птиц и густыми кронами',
+        mapX: 46,
+        mapY: 22,
+        mascotGreeting: 'Прислушайся! В ветвях перекликаются птицы, а где-то рядом прячется пушистая белка. Слушай аудиогид и переходи к игре!',
+        moreInfo:
+          'Фауна рощи богата и разнообразна: зафиксировано 14 видов млекопитающих, включая краснокнижную летучую мышь — гигантскую вечерницу. В парке живут белки, дятлы, совы, синицы, скворцы, стрижи, воробьи и щеглы. Дятлы спасают ясени, поедая опасного вредителя — чёрного ясеневого пилильщика.',
+        hint: {
+          junior: 'Внимательно осмотри все три кроны на картинке и кликни туда, где притаилась белочка! Потом отметь, сколько голосов птиц удалось услышать.',
+          middle: 'Дятел уничтожает чёрного ясеневого пилильщика. В роще обитают синицы, дятлы, совы и щеглы.',
+          senior: 'Краснокнижное млекопитающее рощи — гигантская вечерница. Белки делают запасы семян в почве, часть из которых прорастает новыми деревьями.',
+        },
+        nextDirection: 'Двигайтесь влево к мемориальному комплексу «Жертвам фашизма».',
+      },
+      {
+        id: 5,
+        icon: '🕯️',
+        title: 'Мемориальная',
+        shortTitle: 'Мемориал',
+        location: 'Мемориальный комплекс «Жертвам фашизма»',
+        mapX: 19,
+        mapY: 21,
+        mascotGreeting: 'Здесь мы замедляем шаг. Чистяковская роща хранит не только природу, но и память поколений. Прослушай аудиогид перед заданиями.',
+        moreInfo:
+          '8 мая 1975 года на месте массовых захоронений замученных гитлеровцами мирных жителей открыт мемориальный комплекс «Жертвам фашизма» (скульптор И. П. Шмагун, архитекторы И. И. и В. Т. Головеровы). В октябре 1998 года в роще открыт памятник «Сынам Кубани, павшим в Афганистане». В годы оккупации Краснодара большая часть деревьев рощи была вырублена.',
+        hint: {
+          junior: 'Память помогает нам ценить мир и беречь историю родного города. Выбери светлые и добрые слова-ассоциации.',
+          middle: 'Мемориал «Жертвам фашизма» открыт 8 мая 1975 года. В период оккупации большая часть деревьев рощи была вырублена.',
+          senior: '1975 год — мемориал «Жертвам фашизма»; 1998 год — памятник «Сынам Кубани, павшим в Афганистане». Напишите хотя бы одно предложение о своей идее экоакции.',
+        },
+        nextDirection: 'Выходите на финишную прямую в центр рощи — к зоне отдыха у фонтана!',
+      },
+      {
+        id: 6,
+        icon: '⛲',
+        title: 'Экологический практикум',
+        shortTitle: 'Финиш',
+        location: 'Зона отдыха у фонтана (завершающая станция)',
+        mapX: 45,
+        mapY: 52,
+        mascotGreeting: 'Финишная станция у фонтана! Давай закрепим правила защиты рощи — после этого задания тебя ждёт именная грамота!',
+        moreInfo:
+          'Завершающая точка маршрута посвящена подведению итогов и реальной заботе о природе. Поскольку Чистяковская роща — ООПТ, соблюдение правил чистоты, раздельного сбора отходов и бережного отношения к растениям и животным помогает сохранить этот зелёный остров в центре Краснодара.',
+        hint: {
+          junior: 'Сначала нажми на предмет мусора, а потом — на подходящий контейнер: бутылка → Пластик, газета → Бумага, банка → Стекло.',
+          middle: 'В «Кодекс посетителя» входят: ходить по дорожкам, уносить мусор в урны, не рвать растения и соблюдать тишину у гнездовий.',
+          senior: 'Режим ООПТ допускает экостенды, кормушки и урны для раздельного сбора, но запрещает автопарковки и мангальные зоны.',
+        },
+        nextDirection: 'Поздравляем! Все 6 станций пройдены — время забирать грамоту!',
+      },
+    ];
+
+    /* =========================================================================
+       4. СОСТОЯНИЕ ПРИЛОЖЕНИЯ И localStorage
+       ========================================================================= */
+    const STORAGE_KEY = 'chistyakovskaya_ecotrail_v2';
+
+    let appState = {
+      currentView: 'home', // 'home' | 'route' | 'reward'
+      activeStationId: 1,
+      activeAgeGroup: 'junior', // 'junior' | 'middle' | 'senior'
+      completedStations: [],
+      victoryShown: false,
+      squirrelFound: false,
+      selectedSortItem: null,
+      sortedItems: {},
+    };
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.completedStations)) appState.completedStations = parsed.completedStations;
+          if (parsed.activeAgeGroup) appState.activeAgeGroup = parsed.activeAgeGroup;
+          if (typeof parsed.victoryShown === 'boolean') appState.victoryShown = parsed.victoryShown;
+        }
+      } catch (e) {}
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            completedStations: appState.completedStations,
+            activeAgeGroup: appState.activeAgeGroup,
+            victoryShown: appState.victoryShown,
+          })
+        );
+      } catch (e) {}
+    }
+
+    /* =========================================================================
+       5. НАСТОЯЩИЙ HTML5-АУДИОПЛЕЕР (ТОЧНЫЕ СЕКУНДЫ, ПОЛЗУНОК, 0.5x/1x/1.5x/2x)
+       ========================================================================= */
+    const PLAYBACK_SPEEDS = [0.5, 1, 1.5, 2];
+
+    const AudioManager = {
+      instances: {}, // playerKey -> { audio, stationId, rafId, isScrubbing, speed, unavailable, triedFallback }
+
+      clearAll() {
+        Object.keys(this.instances).forEach((key) => {
+          const inst = this.instances[key];
+          if (inst.rafId) cancelAnimationFrame(inst.rafId);
+          if (inst.audio) {
+            inst.audio.pause();
+            inst.audio.src = '';
+          }
+        });
+        this.instances = {};
+      },
+
+      pauseAll(exceptKey = null) {
+        Object.keys(this.instances).forEach((key) => {
+          if (key === exceptKey) return;
+          const inst = this.instances[key];
+          if (inst.audio && !inst.audio.paused) {
+            inst.audio.pause();
+          }
+          if (inst.rafId) {
+            cancelAnimationFrame(inst.rafId);
+            inst.rafId = null;
+          }
+          this.updatePlayBtnUI(key, false);
+        });
+      },
+
+      formatTime(seconds) {
+        if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+        const total = Math.floor(seconds);
+        const mins = Math.floor(total / 60);
+        const secs = total % 60;
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      },
+
+      initPlayer(playerKey, stationId) {
+        // Очищаем старый инстанс этого же ключа при перерендере DOM
+        if (this.instances[playerKey]) {
+          const old = this.instances[playerKey];
+          if (old.rafId) cancelAnimationFrame(old.rafId);
+          if (old.audio) {
+            old.audio.pause();
+            old.audio.src = '';
+          }
+        }
+
+        const entry = MEDIA_CONFIG.audio[stationId];
+        const audio = new Audio();
+        audio.preload = 'metadata';
+
+        const inst = {
+          audio,
+          stationId,
+          entry,
+          rafId: null,
+          isScrubbing: false,
+          speed: 1,
+          unavailable: false,
+        };
+        this.instances[playerKey] = inst;
+
+        audio.src = getMediaUrl(entry);
+
+        audio.addEventListener('loadedmetadata', () => {
+          inst.unavailable = false;
+          this.setUnavailableUI(playerKey, false);
+          this.syncTimeAndSlider(playerKey);
+        });
+
+        audio.addEventListener('canplay', () => {
+          inst.unavailable = false;
+          this.setUnavailableUI(playerKey, false);
+          this.syncTimeAndSlider(playerKey);
+        });
+
+        audio.addEventListener('ended', () => {
+          if (inst.rafId) {
+            cancelAnimationFrame(inst.rafId);
+            inst.rafId = null;
+          }
+          this.updatePlayBtnUI(playerKey, false);
+          this.syncTimeAndSlider(playerKey, true);
+        });
+
+        audio.addEventListener('error', () => {
+          inst.unavailable = true;
+          if (inst.rafId) {
+            cancelAnimationFrame(inst.rafId);
+            inst.rafId = null;
+          }
+          this.updatePlayBtnUI(playerKey, false);
+          this.setUnavailableUI(playerKey, true);
+        });
+
+        // Привязываем события ползунка перемотки (без подёргивания во время перетягивания)
+        const slider = document.getElementById(`audio-slider-${playerKey}`);
+        if (slider) {
+          const startScrub = () => {
+            inst.isScrubbing = true;
+          };
+          const endScrub = () => {
+            if (!inst.isScrubbing) return;
+            inst.isScrubbing = false;
+            if (Number.isFinite(audio.duration) && audio.duration > 0) {
+              audio.currentTime = (Number(slider.value) / 1000) * audio.duration;
+            }
+            this.syncTimeAndSlider(playerKey);
+          };
+
+          slider.addEventListener('pointerdown', startScrub);
+          slider.addEventListener('touchstart', startScrub, { passive: true });
+          slider.addEventListener('mousedown', startScrub);
+
+          slider.addEventListener('input', () => {
+            inst.isScrubbing = true;
+            const pct = Number(slider.value) / 10;
+            this.updateSliderTrackGradient(slider, pct);
+            if (Number.isFinite(audio.duration) && audio.duration > 0) {
+              const targetSec = (Number(slider.value) / 1000) * audio.duration;
+              const timeEl = document.getElementById(`audio-time-${playerKey}`);
+              if (timeEl) {
+                timeEl.textContent = `${this.formatTime(targetSec)} / ${this.formatTime(audio.duration)}`;
+              }
+            }
+          });
+
+          slider.addEventListener('change', endScrub);
+          slider.addEventListener('pointerup', endScrub);
+          slider.addEventListener('touchend', endScrub);
+          slider.addEventListener('mouseup', endScrub);
+        }
+
+        // Обновляем градиент трека при старте
+        if (slider) this.updateSliderTrackGradient(slider, 0);
+      },
+
+      updateSliderTrackGradient(slider, pct) {
+        const isDark = getCurrentTheme() === 'dark';
+        const filled = isDark ? '#66C28A' : '#5EA87B';
+        const empty = isDark ? '#2B4235' : '#D4ECDB';
+        const safePct = Math.max(0, Math.min(100, pct));
+        slider.style.background = `linear-gradient(to right, ${filled} 0%, ${filled} ${safePct}%, ${empty} ${safePct}%, ${empty} 100%)`;
+      },
+
+      setUnavailableUI(playerKey, isUnavailable) {
+        const statusEl = document.getElementById(`audio-status-${playerKey}`);
+        const btn = document.getElementById(`audio-btn-${playerKey}`);
+        const slider = document.getElementById(`audio-slider-${playerKey}`);
+        const inst = this.instances[playerKey];
+
+        if (statusEl && inst) {
+          if (isUnavailable) {
+            statusEl.textContent = `Запись пока не добавлена (добавьте ${inst.entry.primary})`;
+            statusEl.className = 'text-[11px] font-semibold text-amber-700 dark:text-amber-300';
+          } else {
+            statusEl.textContent = 'Нажмите ▶, двигайте ползунок для перемотки или выберите скорость';
+            statusEl.className = 'text-[11px] text-moss dark:text-nightMuted';
+          }
+        }
+        if (btn) {
+          btn.disabled = isUnavailable;
+          btn.classList.toggle('opacity-45', isUnavailable);
+          btn.classList.toggle('cursor-not-allowed', isUnavailable);
+        }
+        if (slider) {
+          slider.disabled = isUnavailable;
+          slider.classList.toggle('opacity-45', isUnavailable);
+        }
+      },
+
+      updatePlayBtnUI(playerKey, isPlaying) {
+        const btn = document.getElementById(`audio-btn-${playerKey}`);
+        if (btn) btn.textContent = isPlaying ? '⏸' : '▶';
+      },
+
+      syncTimeAndSlider(playerKey, forceEnd = false) {
+        const inst = this.instances[playerKey];
+        if (!inst) return;
+        const { audio } = inst;
+        const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+        const current = forceEnd && duration ? duration : audio.currentTime || 0;
+
+        const timeEl = document.getElementById(`audio-time-${playerKey}`);
+        const slider = document.getElementById(`audio-slider-${playerKey}`);
+
+        if (timeEl) {
+          timeEl.textContent = duration > 0
+            ? `${this.formatTime(current)} / ${this.formatTime(duration)}`
+            : '0:00 / --:--';
+        }
+
+        if (slider && !inst.isScrubbing && duration > 0) {
+          const val = Math.round((current / duration) * 1000);
+          slider.value = val;
+          this.updateSliderTrackGradient(slider, (current / duration) * 100);
+        }
+      },
+
+      startAnimationLoop(playerKey) {
+        const inst = this.instances[playerKey];
+        if (!inst) return;
+
+        const tick = () => {
+          if (!inst.audio || inst.audio.paused || inst.audio.ended) {
+            inst.rafId = null;
+            return;
+          }
+          this.syncTimeAndSlider(playerKey);
+          inst.rafId = requestAnimationFrame(tick);
+        };
+
+        if (inst.rafId) cancelAnimationFrame(inst.rafId);
+        inst.rafId = requestAnimationFrame(tick);
+      },
+
+      togglePlay(playerKey) {
+        const inst = this.instances[playerKey];
+        if (!inst || inst.unavailable) return;
+
+        if (inst.audio.paused) {
+          this.pauseAll(playerKey);
+          inst.audio.playbackRate = inst.speed;
+          const playPromise = inst.audio.play();
+          if (playPromise && typeof playPromise.then === 'function') {
+            playPromise
+              .then(() => {
+                this.updatePlayBtnUI(playerKey, true);
+                this.startAnimationLoop(playerKey);
+              })
+              .catch(() => {
+                this.updatePlayBtnUI(playerKey, false);
+              });
+          } else {
+            this.updatePlayBtnUI(playerKey, true);
+            this.startAnimationLoop(playerKey);
+          }
+        } else {
+          inst.audio.pause();
+          if (inst.rafId) {
+            cancelAnimationFrame(inst.rafId);
+            inst.rafId = null;
+          }
+          this.updatePlayBtnUI(playerKey, false);
+          this.syncTimeAndSlider(playerKey);
+        }
+      },
+
+      setSpeed(playerKey, speed) {
+        const inst = this.instances[playerKey];
+        if (!inst) return;
+        inst.speed = speed;
+        if (inst.audio) {
+          inst.audio.playbackRate = speed;
+        }
+        // Подсвечиваем активную кнопку скорости
+        PLAYBACK_SPEEDS.forEach((sp) => {
+          const btn = document.getElementById(`audio-speed-${playerKey}-${String(sp).replace('.', '_')}`);
+          if (!btn) return;
+          const active = sp === speed;
+          btn.className = active
+            ? 'px-2 py-1 rounded-lg text-[11px] font-extrabold bg-sage dark:bg-nightAccent text-white dark:text-nightBg shadow-sm transition'
+            : 'px-2 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-nightCard text-moss dark:text-nightMuted border border-cardBorder dark:border-nightBorder hover:bg-mintSoft dark:hover:bg-nightSoft transition';
+        });
+      },
+    };
+
+    function stopAllAudioPlayers() {
+      AudioManager.pauseAll();
+    }
+
+    function buildAudioPlayerHTML(playerKey, station, compact = false) {
+      const speedButtons = PLAYBACK_SPEEDS.map((sp) => {
+        const spId = String(sp).replace('.', '_');
+        const isDefault = sp === 1;
+        return `
+          <button
+            type="button"
+            id="audio-speed-${playerKey}-${spId}"
+            onclick="AudioManager.setSpeed('${playerKey}', ${sp})"
+            class="${
+              isDefault
+                ? 'px-2 py-1 rounded-lg text-[11px] font-extrabold bg-sage dark:bg-nightAccent text-white dark:text-nightBg shadow-sm transition'
+                : 'px-2 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-nightCard text-moss dark:text-nightMuted border border-cardBorder dark:border-nightBorder hover:bg-mintSoft dark:hover:bg-nightSoft transition'
+            }"
+          >
+            ${sp}x
+          </button>
+        `;
+      }).join('');
+
+      return `
+        <div class="bg-milk dark:bg-nightSoft/70 rounded-2xl border border-mintMid dark:border-nightBorder p-4 space-y-3">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <button
+                type="button"
+                id="audio-btn-${playerKey}"
+                onclick="AudioManager.togglePlay('${playerKey}')"
+                class="w-11 h-11 rounded-full bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg flex items-center justify-center shadow-sm transition active:scale-95 shrink-0 text-base"
+                aria-label="Воспроизвести или поставить на паузу"
+              >
+                ▶
+              </button>
+              <div class="min-w-0">
+                <p class="text-[11px] font-extrabold uppercase tracking-wider text-sageDark dark:text-nightAccent">
+                  🎧 Аудиогид • Станция ${station.id}
+                </p>
+                <p class="font-display font-bold text-sm sm:text-base text-forest dark:text-nightText truncate">
+                  «${station.title}»
+                </p>
+              </div>
+            </div>
+
+            <span id="audio-time-${playerKey}" class="text-xs font-extrabold text-forest dark:text-nightText tabular-nums shrink-0 bg-white dark:bg-nightCard px-2.5 py-1 rounded-lg border border-cardBorder dark:border-nightBorder">
+              0:00 / --:--
+            </span>
+          </div>
+
+          <!-- Ползунок перемотки -->
+          <div class="px-0.5">
+            <input
+              type="range"
+              id="audio-slider-${playerKey}"
+              min="0"
+              max="1000"
+              step="1"
+              value="0"
+              aria-label="Перемотка аудиогида"
+              class="audio-range w-full"
+            />
+          </div>
+
+          <!-- Нижняя строка: статус + кнопки скорости 0.5x / 1x / 1.5x / 2x -->
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p id="audio-status-${playerKey}" class="text-[11px] text-moss dark:text-nightMuted">
+              Нажмите ▶, двигайте ползунок для перемотки или выберите скорость
+            </p>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-bold uppercase text-moss dark:text-nightMuted mr-0.5">Скорость:</span>
+              ${speedButtons}
+              ${
+                compact
+                  ? `<button type="button" onclick="openTrailView(${station.id})" class="ml-1.5 text-xs font-extrabold text-sageDark dark:text-nightAccent hover:underline">К станции →</button>`
+                  : ''
+              }
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       6. СИСТЕМА МАСКОТОВ С ЭМОЦИЯМИ (ПРИВЕТСТВИЕ ./img/33116.jpg, ПОБЕДА ./img/33113.jpg, ОШИБКИ ./img/33114.jpg)
+       ========================================================================= */
+
+    /**
+     * mood: 'hello' (./img/33116.jpg) | 'win' (./img/33113.jpg) | 'sad' (./img/33114.jpg)
+     */
+    function buildMascotDialogueHTML(mood, titleLabel, speechHTML, compact = false) {
+      let mascotEntry = MEDIA_CONFIG.mascots.greeting;
+      let altText = 'Маскот-проводник: приветствие';
+      let bubbleTheme = 'bg-mintSoft dark:bg-nightSoft border-mintMid dark:border-nightBorder text-forest dark:text-nightText';
+      let titleColor = 'text-sageDark dark:text-nightAccent';
+
+      if (mood === 'win') {
+        mascotEntry = MEDIA_CONFIG.mascots.questPassed;
+        altText = 'Маскот: квест и станция пройдены';
+        bubbleTheme = 'bg-mintSoft dark:bg-nightSoft border-sage dark:border-nightAccent text-forest dark:text-nightText';
+        titleColor = 'text-sageDark dark:text-nightAccent';
+      } else if (mood === 'sad') {
+        mascotEntry = MEDIA_CONFIG.mascots.errorSad;
+        altText = 'Маскот: есть недочёты, проверьте ответы';
+        bubbleTheme = 'bg-red-50/90 dark:bg-red-950/35 border-red-200 dark:border-red-800/70 text-red-950 dark:text-red-100';
+        titleColor = 'text-red-700 dark:text-red-300';
+      }
+
+      const imgH = compact ? 'h-24 sm:h-28' : 'h-28 sm:h-36';
+
+      return `
+        <div class="flex flex-col sm:flex-row items-center sm:items-end gap-4 w-full">
+          <div class="flex items-center justify-center shrink-0 select-none">
+            ${buildManagedImgHTML(mascotEntry, altText, `mascot-img ${imgH} w-auto rounded-2xl object-contain`)}
+          </div>
+
+          <!-- Облачко речи -->
+          <div class="flex-1 w-full rounded-2xl border p-4 sm:p-5 text-sm sm:text-base leading-relaxed shadow-sm ${bubbleTheme}">
+            <p class="text-[11px] font-extrabold uppercase tracking-wider mb-1 ${titleColor}">${titleLabel}</p>
+            <div>${speechHTML}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleAccordion(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('.acc-icon');
+      const isOpen = content.classList.toggle('open');
+      if (icon) {
+        icon.textContent = isOpen ? '−' : '+';
+      }
+    }
+
+    /* =========================================================================
+       7. НАВИГАЦИЯ МЕЖДУ ЭКРАНАМИ (ГЛАВНАЯ #home-view / МАРШРУТ #route-view / НАГРАДА #reward-view)
+       ========================================================================= */
+    function switchView(viewName) {
+      stopAllAudioPlayers();
+      appState.currentView = viewName;
+
+      document.getElementById('home-view').classList.toggle('hidden', viewName !== 'home');
+      document.getElementById('route-view').classList.toggle('hidden', viewName !== 'route');
+      document.getElementById('reward-view').classList.toggle('hidden', viewName !== 'reward');
+
+      syncThemeButtonsUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openHomeView() {
+      switchView('home');
+      renderHomeAudioguides();
+    }
+
+    function openRouteView(stationId = null) {
+      if (stationId && stationId >= 1 && stationId <= 6) {
+        appState.activeStationId = stationId;
+      }
+      switchView('route');
+      refreshMapImage();
+      updateProgressUI();
+      renderMapPins();
+      renderStationPanel();
+    }
+
+    function openRewardView() {
+      closeVictoryModal();
+      switchView('reward');
+      renderRewardMascot();
+      refreshCertificatePreviewImage();
+      updateCertificateLivePreview();
+      document.getElementById('cert-cors-helper').classList.add('hidden');
+    }
+
+    /* =========================================================================
+       8. ГЛАВНАЯ СТРАНИЦА: МАСКОТЫ, АТЛАС, АУДИОГИДЫ
+       ========================================================================= */
+    function renderHomePage() {
+      document.getElementById('hero-mascot-block').innerHTML = buildMascotDialogueHTML(
+        'hello',
+        'Ваши проводники по роще',
+        'Привет! Мы — твои проводники по Чистяковской роще. Нажми «Начать маршрут» или «Открыть карту», послушай аудиогид, выполни задания своего класса и получи грамоту!'
+      );
+
+      renderAtlas('all');
+      renderHomeAudioguides();
+    }
+
+    function filterAtlas(category) {
+      document.querySelectorAll('.atlas-filter-btn').forEach((btn) => {
+        const isActive = btn.dataset.filter === category;
+        btn.className = isActive
+          ? 'atlas-filter-btn px-4 py-2.5 rounded-xl text-sm font-bold transition bg-sage dark:bg-nightAccent text-white dark:text-nightBg shadow-sm'
+          : 'atlas-filter-btn px-4 py-2.5 rounded-xl text-sm font-bold transition bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder text-moss dark:text-nightMuted hover:bg-mintSoft dark:hover:bg-nightSoft';
+      });
+      renderAtlas(category);
+    }
+
+    function renderAtlas(category) {
+      const grid = document.getElementById('atlas-grid');
+      const items = category === 'all' ? ATLAS_ITEMS : ATLAS_ITEMS.filter((i) => i.category === category);
+
+      grid.innerHTML = items
+        .map(
+          (item) => `
+          <article class="bg-white dark:bg-nightCard rounded-2xl border border-cardBorder dark:border-nightBorder shadow-soft dark:shadow-nightSoft p-5 flex flex-col justify-between gap-3 animate-fade-up">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-mintSoft dark:bg-nightSoft flex items-center justify-center text-2xl shrink-0">
+                  ${item.icon}
+                </div>
+                <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${item.badgeColor}">
+                  ${item.badge}
+                </span>
+              </div>
+              <h3 class="font-display font-extrabold text-lg text-forest dark:text-nightText leading-snug">${item.name}</h3>
+              <p class="text-sm text-moss dark:text-nightMuted leading-relaxed">${item.short}</p>
+            </div>
+
+            <div class="pt-2 border-t border-cardBorder/70 dark:border-nightBorder">
+              <button
+                type="button"
+                onclick="toggleAccordion(this)"
+                class="w-full py-1.5 flex items-center justify-between text-xs font-extrabold text-sageDark dark:text-nightAccent hover:text-forest dark:hover:text-nightText transition"
+              >
+                <span>Подробнее о виде</span>
+                <span class="acc-icon w-6 h-6 rounded-full bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent text-base flex items-center justify-center">+</span>
+              </button>
+              <div class="accordion-content">
+                <div class="accordion-inner">
+                  <p class="pt-2 text-xs sm:text-sm text-moss dark:text-nightMuted leading-relaxed">${item.details}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        `
+        )
+        .join('');
+    }
+
+    function renderHomeAudioguides() {
+      const container = document.getElementById('home-audioguides-list');
+      if (!container) return;
+      container.innerHTML = STATIONS_DATA.map((st) => buildAudioPlayerHTML(`home-st-${st.id}`, st, true)).join('');
+      STATIONS_DATA.forEach((st) => AudioManager.initPlayer(`home-st-${st.id}`, st.id));
+    }
+
+    /* =========================================================================
+       9. ИНТЕРАКТИВНАЯ КАРТА, ПИНЫ 1..6 И ПРОГРЕСС-БАР
+       ========================================================================= */
+    function getNextRecommendedStationId() {
+      for (const st of STATIONS_DATA) {
+        if (!appState.completedStations.includes(st.id)) return st.id;
+      }
+      return null;
+    }
+
+    function updateProgressUI() {
+      const count = appState.completedStations.length;
+      const pct = Math.round((count / STATIONS_DATA.length) * 100);
+
+      document.getElementById('progress-label').textContent = `Пройдено ${count} из ${STATIONS_DATA.length} станций`;
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+
+      const rewardBtn = document.getElementById('btn-header-reward');
+      if (count === STATIONS_DATA.length) {
+        rewardBtn.classList.remove('hidden');
+      } else {
+        rewardBtn.classList.add('hidden');
+      }
+    }
+
+    function renderMapStationPreview() {
+      const previewEl = document.getElementById('map-station-preview');
+      if (!previewEl) return;
+      const st = STATIONS_DATA.find((s) => s.id === appState.activeStationId) || STATIONS_DATA[0];
+      const done = appState.completedStations.includes(st.id);
+
+      previewEl.innerHTML = `
+        <div class="min-w-0 space-y-0.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-sageDark dark:text-nightAccent">
+              ${st.icon} Выбрана станция ${st.id} из 6
+            </span>
+            ${
+              done
+                ? '<span class="px-2 py-0.5 rounded-full bg-sage text-white text-[10px] font-extrabold">✓ Пройдена</span>'
+                : '<span class="px-2 py-0.5 rounded-full bg-mintSoft dark:bg-nightSoft text-moss dark:text-nightMuted text-[10px] font-bold">Открыта ниже</span>'
+            }
+          </div>
+          <p class="font-display font-extrabold text-sm sm:text-base text-forest dark:text-nightText truncate">
+            ${st.id}. «${st.title}» — ${st.location}
+          </p>
+        </div>
+        <button
+          type="button"
+          onclick="scrollToStationPanel()"
+          class="shrink-0 px-4 py-2.5 rounded-xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-bold text-xs sm:text-sm transition active:scale-95"
+        >
+          К заданиям ↓
+        </button>
+      `;
+    }
+
+    function scrollToStationPanel() {
+      const panel = document.getElementById('station-panel');
+      if (!panel) return;
+      const y = panel.getBoundingClientRect().top + window.scrollY - 105;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    }
+
+    function renderMapPins() {
+      const layer = document.getElementById('map-pins-layer');
+      const quickPills = document.getElementById('station-quick-pills');
+      const nextRecId = getNextRecommendedStationId();
+
+      renderMapStationPreview();
+
+      layer.innerHTML = STATIONS_DATA.map((st) => {
+        const isCompleted = appState.completedStations.includes(st.id);
+        const isActive = appState.activeStationId === st.id;
+        const isRecommended = nextRecId === st.id && !isCompleted;
+
+        let circleClasses =
+          'w-8 h-8 sm:w-10 sm:h-10 rounded-full font-display font-extrabold text-xs sm:text-base flex items-center justify-center transition-all duration-300 shadow-lg border-2 ';
+
+        if (isCompleted) {
+          circleClasses += 'bg-sage text-white border-white ';
+        } else if (isActive) {
+          circleClasses += 'bg-forest dark:bg-amber-400 text-white dark:text-nightBg border-white ';
+        } else {
+          circleClasses += 'bg-white text-forest border-sage hover:bg-mintSoft ';
+        }
+
+        if (isActive) {
+          circleClasses += 'scale-125 ring-4 ring-white/80 z-20 ';
+        } else if (isRecommended) {
+          circleClasses += 'pin-pulse z-10 ';
+        }
+
+        return `
+          <button
+            type="button"
+            onclick="selectStation(${st.id})"
+            style="left: ${st.mapX}%; top: ${st.mapY}%;"
+            class="absolute -translate-x-1/2 -translate-y-1/2 group flex flex-col items-center focus:outline-none ${isActive ? 'z-20' : 'z-10'}"
+            title="Станция ${st.id}: ${st.title}"
+          >
+            <span class="${circleClasses}">
+              ${isCompleted ? '✓' : st.id}
+            </span>
+            <span class="mt-1 px-2 py-0.5 rounded-lg text-[10px] sm:text-xs font-extrabold shadow-md whitespace-nowrap transition ${
+              isActive
+                ? 'bg-forest text-white dark:bg-amber-400 dark:text-nightBg'
+                : isCompleted
+                ? 'bg-sageDark text-white'
+                : 'bg-white/95 text-forest border border-cardBorder group-hover:bg-mintSoft'
+            }">
+              ${st.id}. ${st.shortTitle}
+            </span>
+          </button>
+        `;
+      }).join('');
+
+      quickPills.innerHTML = STATIONS_DATA.map((st) => {
+        const isCompleted = appState.completedStations.includes(st.id);
+        const isActive = appState.activeStationId === st.id;
+        return `
+          <button
+            type="button"
+            onclick="selectStation(${st.id})"
+            class="shrink-0 px-3 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 ${
+              isActive
+                ? 'bg-sage dark:bg-nightAccent text-white dark:text-nightBg border-sage dark:border-nightAccent shadow-sm'
+                : isCompleted
+                ? 'bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent border-mintMid dark:border-nightBorder'
+                : 'bg-milk dark:bg-nightBg text-moss dark:text-nightMuted border-cardBorder dark:border-nightBorder hover:bg-mintSoft dark:hover:bg-nightSoft'
+            }"
+          >
+            <span>${isCompleted ? '✓' : st.id}</span>
+            <span>${st.shortTitle}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectStation(stationId, shouldScrollToPanel = true) {
+      stopAllAudioPlayers();
+      appState.activeStationId = stationId;
+      appState.squirrelFound = false;
+      appState.selectedSortItem = null;
+      appState.sortedItems = {};
+
+      renderMapPins();
+      renderStationPanel();
+
+      if (shouldScrollToPanel) {
+        scrollToStationPanel();
+      }
+    }
+
+    function selectAgeGroup(group) {
+      appState.activeAgeGroup = group;
+      appState.squirrelFound = false;
+      appState.selectedSortItem = null;
+      appState.sortedItems = {};
+      saveProgress();
+      renderStationPanel();
+    }
+
+    /* =========================================================================
+       10. ПАНЕЛЬ СТАНЦИИ + 18 НАБОРОВ ИНТЕРАКТИВНЫХ ЗАДАНИЙ
+       ========================================================================= */
+    function renderStationPanel() {
+      const station = STATIONS_DATA.find((s) => s.id === appState.activeStationId);
+      if (!station) return;
+
+      const isCompleted = appState.completedStations.includes(station.id);
+      const age = appState.activeAgeGroup;
+      const panel = document.getElementById('station-panel');
+
+      const ageButtons = [
+        { id: 'junior', label: '1–4 класс', sub: 'Младшие' },
+        { id: 'middle', label: '5–8 класс', sub: 'Средние' },
+        { id: 'senior', label: '9–11 класс', sub: 'Старшие' },
+      ];
+
+      const ageSelectorHTML = ageButtons
+        .map((btn) => {
+          const active = age === btn.id;
+          return `
+            <button
+              type="button"
+              onclick="selectAgeGroup('${btn.id}')"
+              class="flex-1 py-3.5 px-3 rounded-2xl border transition-all duration-300 flex flex-col items-center justify-center text-center ${
+                active
+                  ? 'bg-sage dark:bg-nightAccent text-white dark:text-nightBg border-sage dark:border-nightAccent font-extrabold scale-[1.04] shadow-sage opacity-100 z-10'
+                  : 'bg-milk dark:bg-nightBg text-moss dark:text-nightMuted border-cardBorder dark:border-nightBorder font-semibold opacity-55 hover:opacity-85 scale-[0.98]'
+              }"
+            >
+              <span class="font-display text-sm sm:text-base leading-tight">${btn.label}</span>
+              <span class="text-[11px] ${active ? 'opacity-90' : 'opacity-80'} mt-0.5">${btn.sub}</span>
+            </button>
+          `;
+        })
+        .join('');
+
+      const playerKey = `station-${station.id}`;
+
+      panel.innerHTML = `
+        <!-- Шапка станции -->
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-3.5 py-1 rounded-full bg-mintSoft dark:bg-nightSoft border border-mintMid dark:border-nightBorder text-sageDark dark:text-nightAccent text-xs font-extrabold">
+                ${station.icon} Станция ${station.id} из 6
+              </span>
+              ${
+                isCompleted
+                  ? '<span class="px-3 py-1 rounded-full bg-sage dark:bg-nightAccent text-white dark:text-nightBg text-xs font-extrabold">✓ Пройдено</span>'
+                  : ''
+              }
+            </div>
+            <span class="text-xs font-semibold text-moss dark:text-nightMuted">📍 ${station.location}</span>
+          </div>
+
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-forest dark:text-nightText">
+            ${station.id}. «${station.title}»
+          </h2>
+        </div>
+
+        <!-- Приветствие от маскотов (33156.png + 33155.png) -->
+        <div>
+          ${buildMascotDialogueHTML('hello', 'Проводники на станции', station.mascotGreeting, true)}
+        </div>
+
+        <!-- Настоящий HTML5-аудиогид станции (перед заданиями!) -->
+        <div class="space-y-3">
+          ${buildAudioPlayerHTML(playerKey, station, false)}
+
+          <!-- Раскрывашка «+ Подробнее об истории и природе локации» -->
+          <div class="bg-milk dark:bg-nightBg rounded-2xl border border-cardBorder dark:border-nightBorder overflow-hidden">
+            <button
+              type="button"
+              onclick="toggleAccordion(this)"
+              class="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left hover:bg-mintSoft/50 dark:hover:bg-nightSoft/60 transition"
+            >
+              <span class="font-bold text-sm text-forest dark:text-nightText">📖 Подробнее об истории и природе локации</span>
+              <span class="acc-icon w-7 h-7 rounded-full bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent font-extrabold text-lg flex items-center justify-center shrink-0">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p class="px-4 pb-4 pt-2 text-sm text-moss dark:text-nightMuted leading-relaxed border-t border-cardBorder/60 dark:border-nightBorder">
+                  ${station.moreInfo}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Выбор возрастной группы (3 анимированные кнопки) -->
+        <div class="space-y-3 pt-2 border-t border-cardBorder dark:border-nightBorder">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-display font-extrabold text-lg text-forest dark:text-nightText">Выберите ваш класс</h3>
+            <span class="text-xs text-moss dark:text-nightMuted">Задания подстроятся автоматически</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2.5 sm:gap-3.5 py-1">
+            ${ageSelectorHTML}
+          </div>
+        </div>
+
+        <!-- Блок заданий -->
+        <form id="station-task-form" onsubmit="handleCheckStation(event)" class="space-y-5 animate-fade-up">
+          ${getTasksHTML(station.id, age)}
+
+          <!-- Раскрывашка «+ Подсказка от проводников» -->
+          <div class="bg-amber-50/80 dark:bg-amber-950/30 rounded-2xl border border-amber-200/80 dark:border-amber-800/50 overflow-hidden">
+            <button
+              type="button"
+              onclick="toggleAccordion(this)"
+              class="w-full px-4 py-3 flex items-center justify-between gap-3 text-left"
+            >
+              <span class="font-bold text-xs sm:text-sm text-amber-900 dark:text-amber-200">💡 Нужна подсказка от проводников?</span>
+              <span class="acc-icon w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200 font-extrabold text-base flex items-center justify-center shrink-0">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <p class="px-4 pb-3.5 pt-1 text-xs sm:text-sm text-amber-900/90 dark:text-amber-100/90 leading-relaxed">
+                  ${station.hint[age]}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Контейнер обратной связи (маскоты при ошибках 33152+33153 или при победе 33151+33150) -->
+          <div id="task-feedback" class="hidden"></div>
+
+          <!-- Кнопка проверки -->
+          <button
+            type="submit"
+            class="w-full py-4 rounded-2xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-display font-extrabold text-base sm:text-lg shadow-sage transition active:scale-[0.99]"
+          >
+            Выполнить и проверить ✓
+          </button>
+        </form>
+      `;
+
+      // Инициализируем реальный HTML5-плеер станции
+      AudioManager.initPlayer(playerKey, station.id);
+    }
+
+    /**
+     * Общие классы карточек и опций для 18 наборов заданий (с полной поддержкой тёмной темы)
+     */
+    const TASK_BOX = 'bg-milk dark:bg-nightBg rounded-2xl border border-cardBorder dark:border-nightBorder p-4 sm:p-5 space-y-3';
+    const OPT_ROW = 'flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder cursor-pointer hover:border-sage dark:hover:border-nightAccent transition';
+    const OPT_ROW_TOP = 'flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder cursor-pointer hover:border-sage dark:hover:border-nightAccent transition';
+    const FIELD_CLS = 'px-4 py-2.5 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder focus:outline-none focus:ring-2 focus:ring-sage dark:focus:ring-nightAccent font-bold text-forest dark:text-nightText';
+
+    function getTasksHTML(stationId, age) {
+      // -------------------- СТАНЦИЯ 1: ВОРОТА В ИСТОРИЮ --------------------
+      if (stationId === 1) {
+        if (age === 'junior') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Рассмотри главную арку 1956 года</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Какие архитектурные элементы хорошо заметны на арке входа?</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st1_j_arch" value="columns" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Колонны и полукруг сверху</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st1_j_arch" value="pyramid" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Стеклянная пирамида и шпиль</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st1_j_arch" value="bridge" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Подвесной мост с канатами</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Измерь шагами и зарисуй</p>
+              <label class="block text-sm text-moss dark:text-nightMuted">Посчитай, сколько твоих шагов от арки до первого дерева, и впиши число:</label>
+              <input type="number" min="1" max="500" id="st1_j_steps" placeholder="Например: 18" class="w-full sm:w-56 ${FIELD_CLS}" />
+              <label class="flex items-center gap-3 pt-1 cursor-pointer">
+                <input type="checkbox" id="st1_j_diary" class="w-5 h-5 rounded accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Я зарисовал(а) арку в дневнике наблюдений!</span>
+              </label>
+            </div>
+          `;
+        }
+        if (age === 'middle') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Сколько лет Чистяковской роще?</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Роща заложена в 1900 году. Сколько лет исполняется парку в ${CURRENT_YEAR} году?</p>
+              <input type="number" id="st1_m_age" placeholder="Введите число лет" class="w-full sm:w-60 ${FIELD_CLS}" />
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Перевод единиц площади</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Площадь ООПТ «Чистяковская роща» составляет <strong class="text-forest dark:text-nightText">54,41 га</strong>. Переведите это значение в квадратные метры (м²):</p>
+              <input type="number" id="st1_m_area" placeholder="Например: 544100" class="w-full sm:w-60 ${FIELD_CLS}" />
+            </div>
+          `;
+        }
+        return `
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Почему роща получила статус ООПТ в 1988 году?</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Выберите <strong class="text-forest dark:text-nightText">3 верные причины</strong>, опираясь на исторический и экологический контекст:</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st1_s_reasons" value="save_trees" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Сохранение вековых зелёных насаждений и редкого биоразнообразия в центре растущего города</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st1_s_reasons" value="history" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Высокая историко-культурная и мемориальная ценность (основание в 1900 г., память о ВОВ)</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st1_s_reasons" value="logging" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Для организации промышленной лесозаготовки ценной древесины</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st1_s_reasons" value="edu" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Защита территории от застройки и развитие экологического просвещения жителей</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Текст для QR-таблички станции</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Напишите краткий исторический очерк о роще (2–5 предложений), который увидит посетитель при сканировании QR-кода:</p>
+            <textarea id="st1_s_essay" rows="3" placeholder="Чистяковская роща была заложена в 1900 году..." class="w-full p-3.5 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder focus:outline-none focus:ring-2 focus:ring-sage dark:focus:ring-nightAccent text-sm text-forest dark:text-nightText"></textarea>
+          </div>
+        `;
+      }
+
+      // -------------------- СТАНЦИЯ 2: ВЕКОВЫЕ ДЕРЕВЬЯ --------------------
+      if (stationId === 2) {
+        if (age === 'junior') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Как правильно собрать листья для изучения?</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st2_j_rule" value="ground" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Поднять только опавшие листья с земли, не срывая с веток</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st2_j_rule" value="tear" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Сорвать самые свежие зелёные листья прямо с дерева</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Какой из 3 листьев самый крупный?</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Сравни листья деревьев нашей рощи и выбери самый большой:</p>
+              <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+                <label class="cursor-pointer">
+                  <input type="radio" name="st2_j_leaf" value="birch" class="peer sr-only" />
+                  <div class="p-3 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder peer-checked:border-sage dark:peer-checked:border-nightAccent peer-checked:bg-mintSoft dark:peer-checked:bg-nightSoft text-center transition h-full flex flex-col items-center justify-between gap-2">
+                    <svg viewBox="0 0 80 80" class="w-12 h-12 mx-auto"><path d="M40 16 C56 28 58 50 40 62 C22 50 24 28 40 16 Z" fill="#82C49A" stroke="#488B63" stroke-width="2"/><path d="M40 18 V68" stroke="#488B63" stroke-width="2"/></svg>
+                    <span class="text-xs font-bold text-forest dark:text-nightText">Берёза</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="st2_j_leaf" value="maple" class="peer sr-only" />
+                  <div class="p-3 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder peer-checked:border-sage dark:peer-checked:border-nightAccent peer-checked:bg-mintSoft dark:peer-checked:bg-nightSoft text-center transition h-full flex flex-col items-center justify-between gap-2">
+                    <svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto"><path d="M40 12 L48 28 L66 24 L54 40 L64 54 L46 52 L40 64 L34 52 L16 54 L26 40 L14 24 L32 28 Z" fill="#6BB586" stroke="#3D7855" stroke-width="2"/><path d="M40 52 V72" stroke="#3D7855" stroke-width="2.5"/></svg>
+                    <span class="text-xs font-bold text-forest dark:text-nightText">Клён</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="st2_j_leaf" value="platan" class="peer sr-only" />
+                  <div class="p-3 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder peer-checked:border-sage dark:peer-checked:border-nightAccent peer-checked:bg-mintSoft dark:peer-checked:bg-nightSoft text-center transition h-full flex flex-col items-center justify-between gap-2">
+                    <svg viewBox="0 0 90 90" class="w-20 h-20 mx-auto"><path d="M45 4 L56 26 L82 18 L66 42 L84 62 L56 60 L45 76 L34 60 L6 62 L24 42 L8 18 L34 26 Z" fill="#5EA87B" stroke="#2D6142" stroke-width="2.2"/><path d="M45 60 V86" stroke="#2D6142" stroke-width="3"/></svg>
+                    <span class="text-xs font-bold text-forest dark:text-nightText">Платан</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        if (age === 'middle') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Определи дерево по описанию</p>
+              <p class="text-sm text-moss dark:text-nightMuted">У этого дерева-долгожителя рощи глубокая трещиноватая кора, резные лопастные листья и плоды — жёлуди:</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st2_m_tree" value="oak" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Дуб черешчатый</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st2_m_tree" value="birch" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Берёза бородавчатая</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st2_m_tree" value="pine" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Сосна обыкновенная</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Вычисли возраст дуба по формуле</p>
+              <p class="text-sm text-moss dark:text-nightMuted">
+                Обхват ствола дуба на высоте 1,3 м равен <strong class="text-forest dark:text-nightText">250 см</strong>. Рассчитай его приблизительный возраст по формуле:
+                <span class="inline-block px-2 py-0.5 rounded bg-mintSoft dark:bg-nightSoft font-bold text-forest dark:text-nightText">обхват (см) ÷ 2,5</span>
+              </p>
+              <input type="number" id="st2_m_oak_age" placeholder="Возраст в годах" class="w-full sm:w-56 ${FIELD_CLS}" />
+            </div>
+          `;
+        }
+        return `
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Преобладающая порода рощи</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Какая древесная порода численно преобладает в насаждениях Чистяковской рощи?</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st2_s_dom" value="ash" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Ясень</span>
+              </label>
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st2_s_dom" value="birch" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Берёза</span>
+              </label>
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st2_s_dom" value="pine" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Сосна</span>
+              </label>
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st2_s_dom" value="magnolia" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Магнолия</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Меры помощи ослабленным деревьям</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Вы оценили состояние деревьев и нашли ослабленные экземпляры. Какие меры реально помогут им в условиях ООПТ? (Выберите 2 верных варианта)</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st2_s_care" value="pruning" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Санитарная обрезка сухих ветвей и защита приствольного круга от вытаптывания</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st2_s_care" value="asphalt" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Заасфальтировать почву вплотную к стволам деревьев</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st2_s_care" value="pests" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Регулярный мониторинг вредителей и привлечение птиц-защитников</span>
+              </label>
+            </div>
+          </div>
+        `;
+      }
+
+      // -------------------- СТАНЦИЯ 3: КРАСНОКНИЖНАЯ --------------------
+      if (stationId === 3) {
+        if (age === 'junior') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Тайна «Рождественского дерева»</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Каким необычным ароматом пахнет это удивительное дерево в дендрарии рощи?</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st3_j_scent" value="citrus" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">🍊 Цитрусом</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st3_j_scent" value="chocolate" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">🍫 Шоколадом</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st3_j_scent" value="sea" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">🌊 Морской солью</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Выбери правильный знак-запрет для парка</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Какой знак напомнит всем, что редкие растения нельзя срывать?</p>
+              <div class="grid grid-cols-3 gap-2.5">
+                <label class="cursor-pointer">
+                  <input type="radio" name="st3_j_sign" value="no_pick" class="peer sr-only" />
+                  <div class="p-3 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder peer-checked:border-sage dark:peer-checked:border-nightAccent peer-checked:bg-mintSoft dark:peer-checked:bg-nightSoft text-center transition flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-14 h-14">
+                      <circle cx="32" cy="32" r="26" fill="#FFF5F5" stroke="#DC2626" stroke-width="4" />
+                      <text x="32" y="40" text-anchor="middle" font-size="24">🌷</text>
+                      <line x1="14" y1="14" x2="50" y2="50" stroke="#DC2626" stroke-width="4.5" stroke-linecap="round" />
+                    </svg>
+                    <span class="text-[11px] font-bold text-forest dark:text-nightText">Не рвать цветы</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="st3_j_sign" value="pick_all" class="peer sr-only" />
+                  <div class="p-3 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder peer-checked:border-sage dark:peer-checked:border-nightAccent peer-checked:bg-mintSoft dark:peer-checked:bg-nightSoft text-center transition flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-14 h-14">
+                      <circle cx="32" cy="32" r="26" fill="#EBF6EE" stroke="#5EA87B" stroke-width="4" />
+                      <text x="32" y="40" text-anchor="middle" font-size="24">💐</text>
+                    </svg>
+                    <span class="text-[11px] font-bold text-forest dark:text-nightText">Собирать букеты</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="st3_j_sign" value="fire" class="peer sr-only" />
+                  <div class="p-3 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder peer-checked:border-sage dark:peer-checked:border-nightAccent peer-checked:bg-mintSoft dark:peer-checked:bg-nightSoft text-center transition flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-14 h-14">
+                      <circle cx="32" cy="32" r="26" fill="#EBF6EE" stroke="#5EA87B" stroke-width="4" />
+                      <text x="32" y="40" text-anchor="middle" font-size="24">⛺</text>
+                    </svg>
+                    <span class="text-[11px] font-bold text-forest dark:text-nightText">Разбить лагерь</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        if (age === 'middle') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Что такое Красная книга?</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW_TOP}">
+                  <input type="radio" name="st3_m_redbook" value="correct" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Официальный список редких и находящихся под угрозой исчезновения видов растений, грибов и животных</span>
+                </label>
+                <label class="${OPT_ROW_TOP}">
+                  <input type="radio" name="st3_m_redbook" value="wrong" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Сборник всех растений с красными листьями и ягодами</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Меры безопасности с тисом ягодным</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Тис ягодный занесён в Красную книгу региона, при этом он ядовит. Отметьте <strong class="text-forest dark:text-nightText">2 верных правила</strong>:</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW_TOP}">
+                  <input type="checkbox" name="st3_m_yew" value="no_eat" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Ни в коем случае не пробовать хвою и яркие ягоды на вкус</span>
+                </label>
+                <label class="${OPT_ROW_TOP}">
+                  <input type="checkbox" name="st3_m_yew" value="tea" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Сорвать пару веточек, чтобы заварить ароматный чай</span>
+                </label>
+                <label class="${OPT_ROW_TOP}">
+                  <input type="checkbox" name="st3_m_yew" value="no_break" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Не ломать ветки, любоваться издалека и вымыть руки при случайном контакте</span>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        return `
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Конструктор таблички краснокнижного растения</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Какие <strong class="text-forest dark:text-nightText">3 обязательных элемента</strong> должны быть на информационной табличке у тиса ягодного?</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st3_s_sign" value="name_status" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Русское и латинское название вида + охранный статус (Красная книга)</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st3_s_sign" value="warning" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Предупреждение о ядовитости и правила поведения рядом с растением</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st3_s_sign" value="price" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Цена саженца и реклама ближайшего магазина</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st3_s_sign" value="facts" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Краткое описание особенностей вида и QR-код на электронный гербарий</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Роль ООПТ в сохранении редких видов</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW_TOP}">
+                <input type="radio" name="st3_s_role" value="correct" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Создаёт правовой режим защиты, сохраняет естественную среду обитания и позволяет вести научный мониторинг</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="radio" name="st3_s_role" value="wrong" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Разрешает свободный сбор семян и пересадку редких растений на дачные участки</span>
+              </label>
+            </div>
+          </div>
+        `;
+      }
+
+      // -------------------- СТАНЦИЯ 4: ПТИЧИЙ ГОРОДОК --------------------
+      if (stationId === 4) {
+        if (age === 'junior') {
+          return `
+            <div class="${TASK_BOX}">
+              <div class="flex items-center justify-between gap-2">
+                <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Мини-игра «Найди спрятавшуюся белку»</p>
+                <span class="px-2.5 py-0.5 rounded-lg bg-mintSoft dark:bg-nightSoft text-sageDark dark:text-nightAccent text-[11px] font-bold">Интерактив</span>
+              </div>
+              <p class="text-sm text-moss dark:text-nightMuted">Нажми на дерево или куст, за которым спряталась белочка!</p>
+
+              <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+                <button type="button" onclick="checkSquirrelSpot(this, false)" class="p-4 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder hover:border-sage dark:hover:border-nightAccent transition flex flex-col items-center gap-1.5">
+                  <span class="text-4xl">🌳</span>
+                  <span class="text-xs font-bold text-moss dark:text-nightMuted">Старый ясень</span>
+                </button>
+                <button type="button" onclick="checkSquirrelSpot(this, true)" id="squirrel-correct-spot" class="p-4 rounded-2xl bg-white dark:bg-nightCard border-2 ${appState.squirrelFound ? 'border-sage dark:border-nightAccent bg-mintSoft dark:bg-nightSoft' : 'border-cardBorder dark:border-nightBorder hover:border-sage dark:hover:border-nightAccent'} transition flex flex-col items-center gap-1.5">
+                  <span class="text-4xl">${appState.squirrelFound ? '🐿️' : '🌲'}</span>
+                  <span class="text-xs font-bold ${appState.squirrelFound ? 'text-sageDark dark:text-nightAccent' : 'text-moss dark:text-nightMuted'}">${appState.squirrelFound ? 'Нашёл белку!' : 'Густая крона'}</span>
+                </button>
+                <button type="button" onclick="checkSquirrelSpot(this, false)" class="p-4 rounded-2xl bg-white dark:bg-nightCard border-2 border-cardBorder dark:border-nightBorder hover:border-sage dark:hover:border-nightAccent transition flex flex-col items-center gap-1.5">
+                  <span class="text-4xl">🌿</span>
+                  <span class="text-xs font-bold text-moss dark:text-nightMuted">Куст у аллеи</span>
+                </button>
+              </div>
+              <p id="squirrel-msg" class="text-xs font-bold ${appState.squirrelFound ? 'text-sageDark dark:text-nightAccent' : 'text-moss dark:text-nightMuted'}">
+                ${appState.squirrelFound ? 'Отлично! Белочка нашлась и машет тебе пушистым хвостом!' : 'Попробуй кликнуть по одному из деревьев выше.'}
+              </p>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Прислушайся к птицам</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Сколько разных птичьих голосов тебе удалось услышать на этой станции?</p>
+              <div class="grid grid-cols-3 gap-2">
+                <label class="cursor-pointer">
+                  <input type="radio" name="st4_j_birds" value="1-2" class="peer sr-only" />
+                  <div class="py-2.5 px-3 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder peer-checked:bg-sage dark:peer-checked:bg-nightAccent peer-checked:text-white dark:peer-checked:text-nightBg text-center text-sm font-bold text-forest dark:text-nightText transition">1–2 голоса</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="st4_j_birds" value="3-4" class="peer sr-only" />
+                  <div class="py-2.5 px-3 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder peer-checked:bg-sage dark:peer-checked:bg-nightAccent peer-checked:text-white dark:peer-checked:text-nightBg text-center text-sm font-bold text-forest dark:text-nightText transition">3–4 голоса</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="st4_j_birds" value="5+" class="peer sr-only" />
+                  <div class="py-2.5 px-3 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder peer-checked:bg-sage dark:peer-checked:bg-nightAccent peer-checked:text-white dark:peer-checked:text-nightBg text-center text-sm font-bold text-forest dark:text-nightText transition">5 и больше!</div>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        if (age === 'middle') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Почему дятла называют «санитаром леса»?</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Какого опасного вредителя ясеней помогает сдерживать дятел в нашей роще?</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st4_m_pest" value="sawfly" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Чёрного ясеневого пилильщика</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st4_m_pest" value="potato" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Колорадского жука</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st4_m_pest" value="locust" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Пустынную саранчу</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Кто обитает в «Птичьем городке» рощи?</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Отметьте <strong class="text-forest dark:text-nightText">всех 3 реальных обитателей</strong> Чистяковской рощи:</p>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st4_m_birds" value="tit" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Синица</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st4_m_birds" value="penguin" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Пингвин</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st4_m_birds" value="owl" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Сова</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st4_m_birds" value="goldfinch" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Щегол</span>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        return `
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Краснокнижный ночной обитатель рощи</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Какое редкое млекопитающее из Красной книги отмечено на территории Чистяковской рощи?</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st4_s_bat" value="noctule" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Гигантская вечерница (летучая мышь)</span>
+              </label>
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st4_s_bat" value="lynx" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Кавказская рысь</span>
+              </label>
+              <label class="${OPT_ROW}">
+                <input type="radio" name="st4_s_bat" value="deer" class="w-4 h-4 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Благородный олень</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Экологическая роль белок</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Как белки помогают естественному возобновлению деревьев в парке?</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW_TOP}">
+                <input type="radio" name="st4_s_squirrel" value="seeds" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Прячут орехи и жёлуди в почву — часть забытых запасов весной прорастает новыми деревьями (зоохория)</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="radio" name="st4_s_squirrel" value="pollen" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm font-semibold text-forest dark:text-nightText">Опыляют хвойные деревья вместо пчёл</span>
+              </label>
+            </div>
+          </div>
+        `;
+      }
+
+      // -------------------- СТАНЦИЯ 5: МЕМОРИАЛЬНАЯ --------------------
+      if (stationId === 5) {
+        if (age === 'junior') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Почему важно помнить такие места?</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW_TOP}">
+                  <input type="radio" name="st5_j_mem" value="peace" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Чтобы уважать историю нашего города, беречь мир и помнить о тех, кто пострадал в годы войны</span>
+                </label>
+                <label class="${OPT_ROW_TOP}">
+                  <input type="radio" name="st5_j_mem" value="forget" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Прошлое не имеет значения, о нём не нужно знать</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Выбери добрые слова-ассоциации</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Какие чувства и ценности помогают сохранять мемориал и тишина рощи? (Отметь минимум 2)</p>
+              <div class="flex flex-wrap gap-2">
+                ${['Мир', 'Память', 'Благодарность', 'Уважение', 'Доброта']
+                  .map(
+                    (word) => `
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="st5_j_words" value="${word}" class="peer sr-only" />
+                    <span class="inline-block px-4 py-2 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder peer-checked:bg-sage dark:peer-checked:bg-nightAccent peer-checked:text-white dark:peer-checked:text-nightBg peer-checked:border-sage text-sm font-bold text-forest dark:text-nightText transition">${word}</span>
+                  </label>
+                `
+                  )
+                  .join('')}
+              </div>
+            </div>
+          `;
+        }
+        if (age === 'middle') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Дата открытия мемориального комплекса</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Когда в северной части рощи был открыт мемориал «Жертвам фашизма»?</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st5_m_date" value="1975" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">8 мая 1975 года</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st5_m_date" value="1956" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">1 мая 1956 года</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="radio" name="st5_m_date" value="2008" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">9 мая 2008 года</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Судьба рощи в годы оккупации</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Что произошло с деревьями Чистяковской рощи во время оккупации Краснодара?</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW_TOP}">
+                  <input type="radio" name="st5_m_occ" value="cut" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Роща сильно пострадала — большая часть деревьев была вырублена, а после войны её пришлось восстанавливать</span>
+                </label>
+                <label class="${OPT_ROW_TOP}">
+                  <input type="radio" name="st5_m_occ" value="untouched" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                  <span class="text-sm font-semibold text-forest dark:text-nightText">Роща совершенно не пострадала и осталась в прежнем виде</span>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        return `
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Сопоставьте памятники рощи и годы их открытия</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3.5 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder space-y-2">
+                <p class="text-xs font-bold text-moss dark:text-nightMuted">Мемориал «Жертвам фашизма»</p>
+                <select id="st5_s_match1" class="w-full px-3 py-2 rounded-lg border border-cardBorder dark:border-nightBorder bg-milk dark:bg-nightBg text-sm font-bold text-forest dark:text-nightText focus:outline-none focus:ring-2 focus:ring-sage">
+                  <option value="">Выберите год...</option>
+                  <option value="1975">1975 год</option>
+                  <option value="1988">1988 год</option>
+                  <option value="1998">1998 год</option>
+                </select>
+              </div>
+              <div class="p-3.5 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder space-y-2">
+                <p class="text-xs font-bold text-moss dark:text-nightMuted">Памятник «Сынам Кубани, павшим в Афганистане»</p>
+                <select id="st5_s_match2" class="w-full px-3 py-2 rounded-lg border border-cardBorder dark:border-nightBorder bg-milk dark:bg-nightBg text-sm font-bold text-forest dark:text-nightText focus:outline-none focus:ring-2 focus:ring-sage">
+                  <option value="">Выберите год...</option>
+                  <option value="1975">1975 год</option>
+                  <option value="1988">1988 год</option>
+                  <option value="1998">1998 год</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 2. Концепция ежегодной экоакции памяти</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Предложите короткую идею акции у мемориала, которая объединит историческую память и заботу о природе рощи:</p>
+            <textarea id="st5_s_idea" rows="3" placeholder="Например: весенняя акция «Аллея памяти» с уходом за молодыми деревьями и уборкой территории..." class="w-full p-3.5 rounded-xl bg-white dark:bg-nightCard border border-cardBorder dark:border-nightBorder focus:outline-none focus:ring-2 focus:ring-sage dark:focus:ring-nightAccent text-sm text-forest dark:text-nightText"></textarea>
+          </div>
+        `;
+      }
+
+      // -------------------- СТАНЦИЯ 6: ЭКОЛОГИЧЕСКИЙ ПРАКТИКУМ --------------------
+      if (stationId === 6) {
+        if (age === 'junior') {
+          const items = [
+            { id: 'bottle', label: 'Пластиковая бутылка', icon: '🧴', target: 'plastic' },
+            { id: 'paper', label: 'Старая газета', icon: '📰', target: 'paper' },
+            { id: 'glass', label: 'Стеклянная банка', icon: '🫙', target: 'glass' },
+          ];
+          const bins = [
+            { id: 'plastic', label: 'Пластик', color: 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200', icon: '♻️' },
+            { id: 'paper', label: 'Бумага', color: 'bg-sky-50 dark:bg-sky-950/40 border-sky-300 dark:border-sky-700 text-sky-900 dark:text-sky-200', icon: '📄' },
+            { id: 'glass', label: 'Стекло', color: 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200', icon: '🫧' },
+          ];
+
+          return `
+            <div class="${TASK_BOX}">
+              <div>
+                <p class="font-display font-extrabold text-forest dark:text-nightText">Мини-игра «Сортировка мусора у фонтана»</p>
+                <p class="text-sm text-moss dark:text-nightMuted mt-0.5">Сначала нажми на предмет, а затем — на подходящий контейнер!</p>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2.5">
+                ${items
+                  .map((it) => {
+                    const isSorted = appState.sortedItems[it.id] === it.target;
+                    const isSelected = appState.selectedSortItem === it.id;
+                    return `
+                      <button
+                        type="button"
+                        onclick="selectSortItem('${it.id}')"
+                        ${isSorted ? 'disabled' : ''}
+                        class="p-3 rounded-2xl border-2 text-center transition flex flex-col items-center gap-1.5 ${
+                          isSorted
+                            ? 'bg-mintSoft/60 dark:bg-nightSoft/60 border-sage/40 opacity-50 cursor-default'
+                            : isSelected
+                            ? 'bg-white dark:bg-nightCard border-sage dark:border-nightAccent ring-4 ring-sage/25 scale-105 shadow-sm'
+                            : 'bg-white dark:bg-nightCard border-cardBorder dark:border-nightBorder hover:border-sage'
+                        }"
+                      >
+                        <span class="text-3xl">${isSorted ? '✅' : it.icon}</span>
+                        <span class="text-[11px] sm:text-xs font-bold text-forest dark:text-nightText leading-tight">${it.label}</span>
+                      </button>
+                    `;
+                  })
+                  .join('')}
+              </div>
+
+              <div class="grid grid-cols-3 gap-2.5 pt-1">
+                ${bins
+                  .map((bin) => {
+                    const placedCount = Object.values(appState.sortedItems).filter((v) => v === bin.id).length;
+                    return `
+                      <button
+                        type="button"
+                        onclick="dropToBin('${bin.id}')"
+                        class="p-3.5 rounded-2xl border-2 ${bin.color} hover:scale-[1.03] active:scale-95 transition flex flex-col items-center gap-1"
+                      >
+                        <span class="text-2xl">${bin.icon}</span>
+                        <span class="text-xs sm:text-sm font-extrabold">${bin.label}</span>
+                        <span class="text-[10px] font-bold opacity-80">${placedCount > 0 ? 'Внутри: ✓' : 'Нажми сюда'}</span>
+                      </button>
+                    `;
+                  })
+                  .join('')}
+              </div>
+
+              <p id="sort-game-msg" class="text-xs font-bold text-sageDark dark:text-nightAccent">
+                ${
+                  Object.keys(appState.sortedItems).length === 3
+                    ? 'Супер! Весь мусор рассортирован правильно — можно нажимать «Выполнить и проверить»!'
+                    : appState.selectedSortItem
+                    ? 'Теперь выбери подходящий контейнер внизу.'
+                    : 'Выбери любой предмет сверху.'
+                }
+              </p>
+            </div>
+          `;
+        }
+        if (age === 'middle') {
+          return `
+            <div class="${TASK_BOX}">
+              <p class="font-display font-extrabold text-forest dark:text-nightText">Собери «Кодекс посетителя Чистяковской рощи»</p>
+              <p class="text-sm text-moss dark:text-nightMuted">Отметьте <strong class="text-forest dark:text-nightText">4 правильных правила</strong>, которые соответствуют режиму ООПТ:</p>
+              <div class="space-y-2">
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st6_m_codex" value="paths" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Ходить только по оборудованным дорожкам и аллеям</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st6_m_codex" value="trash" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Выбрасывать отходы только в урны (по возможности раздельно)</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st6_m_codex" value="fire" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Устраивать пикник с костром под старыми дубами</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st6_m_codex" value="plants" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Не срывать растения и не повреждать кору деревьев</span>
+                </label>
+                <label class="${OPT_ROW}">
+                  <input type="checkbox" name="st6_m_codex" value="quiet" class="w-4 h-4 accent-[#5EA87B]" />
+                  <span class="text-sm text-forest dark:text-nightText font-medium">Соблюдать тишину рядом с гнездовьями птиц</span>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+        return `
+          <div class="${TASK_BOX}">
+            <p class="font-display font-extrabold text-forest dark:text-nightText">Задание 1. Проект благоустройства без нарушения режима ООПТ</p>
+            <p class="text-sm text-moss dark:text-nightMuted">Выберите <strong class="text-forest dark:text-nightText">3 допустимых решения</strong> для улучшения зоны отдыха, которые не навредят памятнику природы:</p>
+            <div class="space-y-2">
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st6_s_plan" value="stands" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Установка эколого-просветительских стендов с QR-кодами вдоль дорожек</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st6_s_plan" value="parking" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Строительство автомобильной парковки в центре зелёной зоны</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st6_s_plan" value="bins" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Размещение современных урн для раздельного сбора отходов</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st6_s_plan" value="bbq" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Организация мангальной зоны с открытым огнём</span>
+              </label>
+              <label class="${OPT_ROW_TOP}">
+                <input type="checkbox" name="st6_s_plan" value="feeders" class="w-4 h-4 mt-0.5 accent-[#5EA87B]" />
+                <span class="text-sm text-forest dark:text-nightText font-medium">Создание эко-кормушек для птиц и лавочек из экологичных материалов</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="${TASK_BOX}">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="st6_s_survey" class="w-5 h-5 mt-0.5 rounded accent-[#5EA87B]" />
+              <span class="text-sm font-semibold text-forest dark:text-nightText">
+                Готов(а) рассказать знакомым или провести мини-опрос среди посетителей: «Знаете ли вы, что Чистяковская роща — это ООПТ?»
+              </span>
+            </label>
+          </div>
+        `;
+      }
+
+      return '';
+    }
+
+    /* =========================================================================
+       11. МИНИ-ИГРЫ И ПРОВЕРКА ОТВЕТОВ (С ЭМОЦИЯМИ МАСКОТОВ)
+       ========================================================================= */
+    function checkSquirrelSpot(btn, isCorrect) {
+      const msg = document.getElementById('squirrel-msg');
+      if (isCorrect) {
+        appState.squirrelFound = true;
+        btn.className = 'p-4 rounded-2xl bg-mintSoft dark:bg-nightSoft border-2 border-sage dark:border-nightAccent transition flex flex-col items-center gap-1.5 scale-105';
+        btn.innerHTML = '<span class="text-4xl">🐿️</span><span class="text-xs font-bold text-sageDark dark:text-nightAccent">Нашёл белку!</span>';
+        if (msg) {
+          msg.className = 'text-xs font-bold text-sageDark dark:text-nightAccent';
+          msg.textContent = 'Отлично! Белочка нашлась и машет тебе пушистым хвостом!';
+        }
+      } else {
+        btn.classList.add('border-amber-400', 'bg-amber-50', 'dark:bg-amber-950/40');
+        setTimeout(() => btn.classList.remove('border-amber-400', 'bg-amber-50', 'dark:bg-amber-950/40'), 600);
+        if (msg) {
+          msg.className = 'text-xs font-bold text-amber-700 dark:text-amber-300';
+          msg.textContent = 'Здесь только шуршат листья… Загляни в другое дерево!';
+        }
+      }
+    }
+
+    const SORT_TARGETS = { bottle: 'plastic', paper: 'paper', glass: 'glass' };
+
+    function selectSortItem(itemId) {
+      if (appState.sortedItems[itemId]) return;
+      appState.selectedSortItem = itemId;
+      renderStationPanel();
+    }
+
+    function dropToBin(binId) {
+      const msg = document.getElementById('sort-game-msg');
+      if (!appState.selectedSortItem) {
+        if (msg) {
+          msg.className = 'text-xs font-bold text-amber-700 dark:text-amber-300';
+          msg.textContent = 'Сначала нажми на один из предметов сверху!';
+        }
+        return;
+      }
+
+      const item = appState.selectedSortItem;
+      if (SORT_TARGETS[item] === binId) {
+        appState.sortedItems[item] = binId;
+        appState.selectedSortItem = null;
+        renderStationPanel();
+      } else {
+        if (msg) {
+          msg.className = 'text-xs font-bold text-red-600 dark:text-red-400';
+          msg.textContent = 'Ой, этот контейнер для другого вида отходов! Попробуй соседний.';
+        }
+      }
+    }
+
+    function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map((el) => el.value);
+    }
+
+    function getRadioValue(name) {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : null;
+    }
+
+    function sameSet(arrA, arrB) {
+      if (arrA.length !== arrB.length) return false;
+      const setB = new Set(arrB);
+      return arrA.every((item) => setB.has(item));
+    }
+
+    function validateCurrentStation() {
+      const st = appState.activeStationId;
+      const age = appState.activeAgeGroup;
+      const errors = [];
+
+      if (st === 1) {
+        if (age === 'junior') {
+          if (getRadioValue('st1_j_arch') !== 'columns') errors.push('В задании 1 посмотри внимательнее на арку: там колонны и полукруг.');
+          const steps = Number(document.getElementById('st1_j_steps')?.value);
+          if (!steps || steps <= 0) errors.push('В задании 2 укажи количество шагов (число больше 0).');
+          if (!document.getElementById('st1_j_diary')?.checked) errors.push('Отметь галочкой, что зарисовал(а) арку в дневнике.');
+        } else if (age === 'middle') {
+          const ageVal = Number(document.getElementById('st1_m_age')?.value);
+          if (ageVal !== GROVE_AGE) errors.push(`В задании 1 проверь вычисления: ${CURRENT_YEAR} − 1900 = ${GROVE_AGE} лет.`);
+          const areaVal = Number(document.getElementById('st1_m_area')?.value);
+          if (areaVal !== 544100) errors.push('В задании 2 переведи гектары в м²: умножь 54,41 на 10 000.');
+        } else {
+          const reasons = getCheckedValues('st1_s_reasons');
+          if (!sameSet(reasons, ['save_trees', 'history', 'edu'])) {
+            errors.push('В задании 1 выберите ровно 3 верные причины (промышленная лесозаготовка не подходит).');
+          }
+          const essay = (document.getElementById('st1_s_essay')?.value || '').trim();
+          if (essay.length < 15) errors.push('В задании 2 напишите краткий очерк для QR-таблички (хотя бы пару фраз).');
+        }
+      }
+
+      if (st === 2) {
+        if (age === 'junior') {
+          if (getRadioValue('st2_j_rule') !== 'ground') errors.push('В задании 1 вспомни правило ООПТ: листья собираем только с земли!');
+          if (getRadioValue('st2_j_leaf') !== 'platan') errors.push('В задании 2 присмотрись к размерам листьев — самый крупный у платана.');
+        } else if (age === 'middle') {
+          if (getRadioValue('st2_m_tree') !== 'oak') errors.push('В задании 1 жёлуди и лопастные листья — признаки дуба черешчатого.');
+          const oakAge = Number(document.getElementById('st2_m_oak_age')?.value);
+          if (oakAge !== 100) errors.push('В задании 2 раздели 250 на 2,5 — получится 100 лет.');
+        } else {
+          if (getRadioValue('st2_s_dom') !== 'ash') errors.push('В задании 1 преобладающая порода Чистяковской рощи — ясень.');
+          const care = getCheckedValues('st2_s_care');
+          if (!sameSet(care, ['pruning', 'pests'])) {
+            errors.push('В задании 2 выберите 2 верные меры помощи (асфальт вплотную к стволу вредит корням).');
+          }
+        }
+      }
+
+      if (st === 3) {
+        if (age === 'junior') {
+          if (getRadioValue('st3_j_scent') !== 'citrus') errors.push('В задании 1 «Рождественское дерево» пахнет цитрусом!');
+          if (getRadioValue('st3_j_sign') !== 'no_pick') errors.push('В задании 2 выбери красный перечёркнутый знак «Не рвать цветы».');
+        } else if (age === 'middle') {
+          if (getRadioValue('st3_m_redbook') !== 'correct') errors.push('В задании 1 уточни определение Красной книги.');
+          const yew = getCheckedValues('st3_m_yew');
+          if (!sameSet(yew, ['no_eat', 'no_break'])) {
+            errors.push('В задании 2 отметь 2 безопасных правила для тиса ягодного (чай из него заваривать опасно!).');
+          }
+        } else {
+          const sign = getCheckedValues('st3_s_sign');
+          if (!sameSet(sign, ['name_status', 'warning', 'facts'])) {
+            errors.push('В задании 1 выберите 3 научных и охранных пункта (без цены и рекламы).');
+          }
+          if (getRadioValue('st3_s_role') !== 'correct') errors.push('В задании 2 выберите верную роль ООПТ в защите редких видов.');
+        }
+      }
+
+      if (st === 4) {
+        if (age === 'junior') {
+          if (!appState.squirrelFound) errors.push('В задании 1 сначала найди белочку среди деревьев!');
+          if (!getRadioValue('st4_j_birds')) errors.push('В задании 2 выбери, сколько голосов птиц ты услышал(а).');
+        } else if (age === 'middle') {
+          if (getRadioValue('st4_m_pest') !== 'sawfly') errors.push('В задании 1 дятел спасает ясени от чёрного ясеневого пилильщика.');
+          const birds = getCheckedValues('st4_m_birds');
+          if (!sameSet(birds, ['tit', 'owl', 'goldfinch'])) {
+            errors.push('В задании 2 отметь всех 3 птиц рощи (пингвины в Краснодаре не живут!).');
+          }
+        } else {
+          if (getRadioValue('st4_s_bat') !== 'noctule') errors.push('В задании 1 краснокнижное млекопитающее рощи — гигантская вечерница.');
+          if (getRadioValue('st4_s_squirrel') !== 'seeds') errors.push('В задании 2 белки распространяют семена, делая запасы в земле.');
+        }
+      }
+
+      if (st === 5) {
+        if (age === 'junior') {
+          if (getRadioValue('st5_j_mem') !== 'peace') errors.push('В задании 1 выбери ответ о важности памяти и уважения к истории.');
+          if (getCheckedValues('st5_j_words').length < 2) errors.push('В задании 2 отметь хотя бы 2 добрых слова-ассоциации.');
+        } else if (age === 'middle') {
+          if (getRadioValue('st5_m_date') !== '1975') errors.push('В задании 1 мемориал «Жертвам фашизма» открыт 8 мая 1975 года.');
+          if (getRadioValue('st5_m_occ') !== 'cut') errors.push('В задании 2 вспомни аудиогид: в годы оккупации большая часть деревьев была вырублена.');
+        } else {
+          const m1 = document.getElementById('st5_s_match1')?.value;
+          const m2 = document.getElementById('st5_s_match2')?.value;
+          if (m1 !== '1975' || m2 !== '1998') {
+            errors.push('В задании 1 проверь годы открытия: «Жертвам фашизма» — 1975, «Сынам Кубани» — 1998.');
+          }
+          const idea = (document.getElementById('st5_s_idea')?.value || '').trim();
+          if (idea.length < 10) errors.push('В задании 2 напишите хотя бы короткую идею ежегодной экоакции.');
+        }
+      }
+
+      if (st === 6) {
+        if (age === 'junior') {
+          if (Object.keys(appState.sortedItems).length < 3) {
+            errors.push('Разложи все 3 предмета по правильным контейнерам (Пластик, Бумага, Стекло).');
+          }
+        } else if (age === 'middle') {
+          const codex = getCheckedValues('st6_m_codex');
+          if (!sameSet(codex, ['paths', 'trash', 'plants', 'quiet'])) {
+            errors.push('Отметьте ровно 4 верных правила ООПТ (разведение костров запрещено!).');
+          }
+        } else {
+          const plan = getCheckedValues('st6_s_plan');
+          if (!sameSet(plan, ['stands', 'bins', 'feeders'])) {
+            errors.push('В задании 1 выберите 3 экологичных решения (парковки и мангалы на ООПТ запрещены).');
+          }
+          if (!document.getElementById('st6_s_survey')?.checked) {
+            errors.push('В задании 2 поставьте галочку о готовности рассказать посетителям о статусе ООПТ.');
+          }
+        }
+      }
+
+      return errors;
+    }
+
+    function handleCheckStation(event) {
+      event.preventDefault();
+      const feedback = document.getElementById('task-feedback');
+      const errors = validateCurrentStation();
+
+      // ЕСТЬ ОШИБКИ → показываем маскота с ошибками (./img/33114.jpg)
+      if (errors.length > 0) {
+        const errHTML = `
+          <p class="font-extrabold mb-1.5">Есть недочёты! Исправьте ошибки и нажмите «Выполнить / Проверить» ещё раз:</p>
+          <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm">
+            ${errors.map((err) => `<li>${err}</li>`).join('')}
+          </ul>
+        `;
+        feedback.className = 'animate-fade-up';
+        feedback.innerHTML = buildMascotDialogueHTML('sad', 'Есть недочёты', errHTML, true);
+        feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // ПОБЕДА НА СТАНЦИИ → показываем маскота победы на станции (./img/33113.jpg)
+      const stId = appState.activeStationId;
+      const station = STATIONS_DATA.find((s) => s.id === stId);
+
+      if (!appState.completedStations.includes(stId)) {
+        appState.completedStations.push(stId);
+        saveProgress();
+      }
+
+      updateProgressUI();
+      renderMapPins();
+
+      const nextId = getNextRecommendedStationId();
+      const nextStation = nextId ? STATIONS_DATA.find((s) => s.id === nextId) : null;
+      const allDone = appState.completedStations.length === STATIONS_DATA.length;
+
+      const winSpeech = allDone
+        ? `<p><strong>Квест / станция «${station.title}» пройдена!</strong> Вы выполнили все 6 станций маршрута — открываем финальное поздравление и грамоту!</p>`
+        : `<p><strong>Квест / станция «${station.title}» пройдена!</strong> Следующая точка — <strong>Станция ${nextStation.id}. «${nextStation.title}»</strong>. ${station.nextDirection}</p>`;
+
+      feedback.className = 'space-y-3.5 animate-fade-up';
+      feedback.innerHTML = `
+        ${buildMascotDialogueHTML('win', 'Квест / станция пройдена!', winSpeech, true)}
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          ${
+            allDone
+              ? `<button type="button" onclick="openRewardView()" class="flex-1 py-3.5 px-5 rounded-xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-display font-extrabold text-sm sm:text-base shadow-sage transition">
+                  Забрать награду 🏆
+                </button>`
+              : `<button type="button" onclick="scrollBackToMap(${nextStation.id})" class="flex-1 py-3.5 px-5 rounded-xl bg-sage hover:bg-sageDark dark:bg-nightAccent dark:hover:bg-sage text-white dark:text-nightBg font-display font-extrabold text-sm sm:text-base shadow-sage transition">
+                  Наверх к карте ↑ (к Станции ${nextStation.id})
+                </button>`
+          }
+          <button type="button" onclick="scrollBackToMap()" class="px-4 py-3.5 rounded-xl bg-white dark:bg-nightCard hover:bg-milk dark:hover:bg-nightSoft border border-mintMid dark:border-nightBorder text-forest dark:text-nightText font-bold text-sm transition">
+            Наверх к карте ↑
+          </button>
+        </div>
+      `;
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      if (allDone && !appState.victoryShown) {
+        appState.victoryShown = true;
+        saveProgress();
+        setTimeout(() => showVictoryModal(), 850);
+      }
+    }
+
+    function scrollBackToMap(nextStationId = null) {
+      if (nextStationId) {
+        selectStation(nextStationId, false);
+      }
+      const mapEl = document.getElementById('interactive-map-section');
+      if (mapEl) {
+        const y = mapEl.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      }
+    }
+
+    /* =========================================================================
+       12. ФИНАЛЬНОЕ ПОЗДРАВЛЕНИЕ (#finale-overlay: ./img/33115.jpg + ./img/33112.jpg) + ТЕСТ ФИНАЛА
+       ========================================================================= */
+    function launchConfetti() {
+      const colors = ['#66C28A', '#5EA87B', '#FBBF24', '#38BDF8', '#FB7185', '#A8DFBA'];
+      for (let i = 0; i < 65; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece rounded-sm';
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.width = `${7 + Math.random() * 7}px`;
+        piece.style.height = `${10 + Math.random() * 10}px`;
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = `${2.2 + Math.random() * 2.4}s`;
+        piece.style.animationDelay = `${Math.random() * 0.65}s`;
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 5500);
+      }
+    }
+
+    function showVictoryModal() {
+      document.getElementById('victory-mascot-block').innerHTML = buildManagedImgHTML(
+        MEDIA_CONFIG.mascots.finalTrophy,
+        'Победа с кубком',
+        'mascot-img h-44 sm:h-56 w-auto rounded-2xl object-contain mx-auto'
+      );
+      document.getElementById('finale-congrat-card').innerHTML = buildManagedImgHTML(
+        MEDIA_CONFIG.certificate,
+        'Фрагмент поздравления и грамоты',
+        'h-44 sm:h-56 w-auto rounded-2xl object-contain shadow-xl border-2 border-white/30 mx-auto'
+      );
+      document.getElementById('finale-overlay').classList.remove('hidden');
+      launchConfetti();
+    }
+
+    function closeVictoryModal() {
+      document.getElementById('finale-overlay').classList.add('hidden');
+    }
+
+    function triggerTestFinale() {
+      appState.completedStations = [1, 2, 3, 4, 5, 6];
+      appState.victoryShown = true;
+      saveProgress();
+      if (appState.currentView !== 'route') {
+        openRouteView(6);
+      } else {
+        updateProgressUI();
+        renderMapPins();
+        renderStationPanel();
+      }
+      showVictoryModal();
+    }
+
+    /* =========================================================================
+       13. СТРАНИЦА НАГРАДЫ И ГЕНЕРАЦИЯ ГРАМОТЫ ./img/33112.jpg
+       ========================================================================= */
+    function renderRewardMascot() {
+      const box = document.getElementById('reward-mascot-small');
+      if (box) {
+        box.innerHTML = buildManagedImgHTML(
+          MEDIA_CONFIG.mascots.finalTrophy,
+          'Маскоты с кубком',
+          'mascot-img h-24 sm:h-28 w-auto rounded-2xl object-contain'
+        );
+      }
+      const badgeBox = document.getElementById('reward-congrat-badge-box');
+      if (badgeBox) {
+        badgeBox.innerHTML = buildManagedImgHTML(
+          MEDIA_CONFIG.certificate,
+          'Фрагмент поздравления',
+          'h-24 sm:h-28 w-auto rounded-2xl object-contain border border-cardBorder dark:border-nightBorder shadow-sm'
+        );
+      }
+    }
+
+    /**
+     * Обновляет живое превью имени на грамоте и масштабирует шрифт,
+     * чтобы текст всегда помещался в 72% ширины грамоты.
+     */
+    function updateCertificateLivePreview() {
+      const input = document.getElementById('cert-fullname');
+      const overlay = document.getElementById('cert-live-name-overlay');
+      const container = document.getElementById('cert-printable-area');
+      if (!input || !overlay || !container) return;
+
+      const text = input.value.trim() || 'Фамилия Имя';
+      overlay.textContent = text;
+      overlay.style.opacity = input.value.trim() ? '1' : '0.45';
+
+      // Базовый размер шрифта пропорционален 86px для ширины 1792px (~4.8% ширины контейнера)
+      const containerW = container.clientWidth || 576;
+      let fontSize = containerW * (86 / 1792);
+      overlay.style.fontSize = `${fontSize}px`;
+
+      // Автомасштабирование вниз, если фамилия и имя шире 72% грамоты
+      const maxW = containerW * 0.72;
+      while (overlay.scrollWidth > maxW && fontSize > 11) {
+        fontSize -= 1;
+        overlay.style.fontSize = `${fontSize}px`;
+      }
+    }
+
+    /**
+     * Рисует грамоту ./33112.jpg с вписанной Фамилией и Именем на полноразмерном Canvas
+     * и скачивает PNG. При SecurityError на file:// показывает аккуратную подсказку.
+     */
+    function renderAndDownloadCertFromSrc(imgSrc, fullName) {
+      const canvas = document.getElementById('certificate-export-canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const activeSrc = imgSrc || getMediaUrl(MEDIA_CONFIG.certificate);
+
+      // Для обычных путей ставим crossOrigin только если это http/https
+      if (activeSrc.startsWith('http://') || activeSrc.startsWith('https://')) {
+        img.crossOrigin = 'anonymous';
+      }
+
+      img.onload = () => {
+        const W = img.naturalWidth || 1792;
+        const H = img.naturalHeight || 2400;
+        canvas.width = W;
+        canvas.height = H;
+
+        // 1. Рисуем саму грамоту 33112.jpg в полном разрешении
+        ctx.clearRect(0, 0, W, H);
+        ctx.drawImage(img, 0, 0, W, H);
+
+        // 2. Вписываем Фамилию и Имя строго по центру над коричневой линией (y = 42.3%, линия на 44.1%)
+        const maxTextWidth = W * 0.72;
+        let fontSize = Math.round(W * (86 / 1792)); // ~86px при ширине 1792px
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillStyle = '#3B2415';
+
+        ctx.font = `700 ${fontSize}px Georgia, "Times New Roman", serif`;
+        while (ctx.measureText(fullName).width > maxTextWidth && fontSize > 26) {
+          fontSize -= 2;
+          ctx.font = `700 ${fontSize}px Georgia, "Times New Roman", serif`;
+        }
+
+        ctx.fillText(fullName, W * 0.5, H * 0.423);
+
+        // 3. Экспортируем и скачиваем PNG (перехватываем SecurityError на file://)
+        try {
+          const dataUrl = canvas.toDataURL('image/png');
+          const safeName = fullName.replace(/[^а-яА-ЯёЁa-zA-Z0-9_\-\s]/g, '').trim().replace(/\s+/g, '_') || 'участник';
+          const link = document.createElement('a');
+          link.download = `Грамота_Чистяковская_роща_${safeName}.png`;
+          link.href = dataUrl;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          document.getElementById('cert-cors-helper').classList.add('hidden');
+          showToast('Грамота успешно сохранена!');
+        } catch (err) {
+          console.warn('Экспорт canvas заблокирован политикой file://:', err);
+          document.getElementById('cert-cors-helper').classList.remove('hidden');
+          showToast('Выберите файл 33112.jpg или нажмите «Распечатать / PDF»');
+        }
+      };
+
+      img.onerror = () => {
+        document.getElementById('cert-cors-helper').classList.remove('hidden');
+        showToast('Не найден файл ./33112.jpg — выберите его вручную ниже.');
+      };
+
+      img.src = activeSrc;
+    }
+
+    function downloadCertificatePNG() {
+      const input = document.getElementById('cert-fullname');
+      const fullName = (input.value || '').trim();
+      if (!fullName) {
+        input.focus();
+        showToast('Сначала введите Фамилию и Имя участника!');
+        return;
+      }
+
+      const certSrc = LOCAL_CERT_DATA_URL || getMediaUrl(MEDIA_CONFIG.certificate);
+      renderAndDownloadCertFromSrc(certSrc, fullName);
+    }
+
+    function handleCertFileFallback(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        LOCAL_CERT_DATA_URL = e.target.result;
+        refreshCertificatePreviewImage();
+        const fullName = (document.getElementById('cert-fullname').value || '').trim() || 'Участник экотропы';
+        renderAndDownloadCertFromSrc(LOCAL_CERT_DATA_URL, fullName);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* =========================================================================
+       14. СБРОС ПРОГРЕССА
+       ========================================================================= */
+    function openResetModal() {
+      document.getElementById('modal-reset').classList.remove('hidden');
+    }
+
+    function closeResetModal() {
+      document.getElementById('modal-reset').classList.add('hidden');
+    }
+
+    function confirmResetProgress() {
+      appState.completedStations = [];
+      appState.victoryShown = false;
+      appState.squirrelFound = false;
+      appState.selectedSortItem = null;
+      appState.sortedItems = {};
+      saveProgress();
+      closeResetModal();
+      updateProgressUI();
+      renderMapPins();
+      renderStationPanel();
+      showToast('Прогресс маршрута сброшен.');
+    }
+
+    /* =========================================================================
+       15. ИНИЦИАЛИЗАЦИЯ И ПОДДЕРЖКА QR-ССЫЛОК (?station=1..6)
+       ========================================================================= */
+    window.addEventListener('resize', () => {
+      if (appState.currentView === 'reward') {
+        updateCertificateLivePreview();
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadProgress();
+      syncThemeButtonsUI();
+      renderHomePage();
+      refreshMapImage();
+      refreshCertificatePreviewImage();
+
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const qrStation = parseInt(params.get('station'), 10);
+        if (qrStation >= 1 && qrStation <= 6) {
+          openRouteView(qrStation);
+        }
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>
