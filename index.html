@@ -594,7 +594,7 @@
     <footer class="border-t border-cardBorder dark:border-nightBorder bg-white dark:bg-nightCard mt-10">
       <div class="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-moss dark:text-nightMuted text-center sm:text-left">
         <p class="font-bold text-forest dark:text-nightText">Экологическая тропа «Чистяковская роща» • г. Краснодар</p>
-        <p>Памятник природы регионального значения • Проводники: белка Власик и девочка Катя</p>
+        <p>Памятник природы регионального значения • Проводники: бельчонок Власик и девочка Катя</p>
       </div>
     </footer>
   </div>
@@ -802,7 +802,7 @@
         <div class="flex justify-center">
           <img
             src="./vlasrosh3.png"
-            alt="Опечаленные белка Власик и девочка Катя"
+            alt="Опечаленные бельчонок Власик и девочка Катя"
             class="mascot-png w-44 h-44 sm:w-56 sm:h-56 object-contain mx-auto"
           />
         </div>
@@ -841,7 +841,7 @@
           <div class="flex flex-col sm:flex-row items-center gap-5">
             <img
               src="./vlasrosh4.png"
-              alt="Белка Власик и девочка Катя с кубком"
+              alt="Бельчонок Власик и девочка Катя с кубком"
               class="mascot-png w-36 h-36 sm:w-48 sm:h-48 object-contain shrink-0"
             />
             <div class="text-center sm:text-left space-y-2">
@@ -1195,7 +1195,7 @@
         location: 'Главный вход, арка сельхозвыставки 1956 года',
         mapX: 66,
         mapY: 74,
-        mascotGreeting: 'Мы — белка Власик и девочка Катя! Мы встречаем тебя у главного входа со стороны ул. Колхозной. Включай аудиогид, выбирай класс и выполняй задания Станции 1!',
+        mascotGreeting: 'Мы — бельчонок Власик и девочка Катя! Мы встречаем тебя у главного входа со стороны ул. Колхозной. Включай аудиогид, выбирай класс и выполняй задания Станции 1!',
         moreInfo:
           'Роща заложена в 1900 году по инициативе городского головы Екатеринодара Гавриила Чистякова. Под парк выделено 30 десятин земли (около 43,5 га). Первые деревья сажали учащиеся городских школ и Кубанской учительской семинарии. Среди первых пород — дуб черешчатый и дуб Гартвиса, ясень обыкновенный, берёза бородавчатая, сосна обыкновенная, платан западный. В 1923 году роща была переименована в Первомайскую, историческое название возвращено лишь в 2008 году.',
         hint: {
@@ -1702,33 +1702,33 @@
        ========================================================================= */
     function buildMascotDialogueHTML(mood, titleLabel, speechHTML) {
       let src = MEDIA_CONFIG.mascots.welcome;
-      let altText = 'Белка Власик и девочка Катя';
+      let altText = 'Бельчонок Власик и девочка Катя';
       let bubbleTheme = 'bg-mintSoft dark:bg-nightSoft border-mintMid dark:border-nightBorder text-forest dark:text-nightText';
       let titleColor = 'text-sageDark dark:text-nightAccent';
 
       if (mood === 'thinking') {
         src = MEDIA_CONFIG.mascots.thinking;
-        altText = 'Задумчивые белка Власик и девочка Катя';
+        altText = 'Задумчивые бельчонок Власик и девочка Катя';
         bubbleTheme = 'bg-mintSoft/90 dark:bg-nightSoft border-mintMid dark:border-nightBorder text-forest dark:text-nightText';
         titleColor = 'text-sageDark dark:text-nightAccent';
       } else if (mood === 'hint') {
         src = MEDIA_CONFIG.mascots.thinking;
-        altText = 'Задумчивые белка Власик и девочка Катя';
+        altText = 'Задумчивые бельчонок Власик и девочка Катя';
         bubbleTheme = 'bg-amber-50/90 dark:bg-amber-950/35 border-amber-200 dark:border-amber-800/60 text-amber-950 dark:text-amber-100';
         titleColor = 'text-amber-800 dark:text-amber-300';
       } else if (mood === 'map') {
         src = MEDIA_CONFIG.mascots.withMap;
-        altText = 'Весёлые белка Власик и девочка Катя с картой';
+        altText = 'Весёлые бельчонок Власик и девочка Катя с картой';
         bubbleTheme = 'bg-mintSoft dark:bg-nightSoft border-mintMid dark:border-nightBorder text-forest dark:text-nightText';
         titleColor = 'text-sageDark dark:text-nightAccent';
       } else if (mood === 'sad') {
         src = MEDIA_CONFIG.mascots.sad;
-        altText = 'Опечаленные белка Власик и девочка Катя';
+        altText = 'Опечаленные бельчонок Власик и девочка Катя';
         bubbleTheme = 'bg-red-50/90 dark:bg-red-950/35 border-red-200 dark:border-red-800/70 text-red-950 dark:text-red-100';
         titleColor = 'text-red-700 dark:text-red-300';
       } else if (mood === 'trophy') {
         src = MEDIA_CONFIG.mascots.trophy;
-        altText = 'Белка Власик и девочка Катя с кубком';
+        altText = 'Бельчонок Власик и девочка Катя с кубком';
         bubbleTheme = 'bg-mintSoft dark:bg-nightSoft border-sage dark:border-nightAccent text-forest dark:text-nightText';
         titleColor = 'text-sageDark dark:text-nightAccent';
       }
@@ -1842,8 +1842,8 @@
     function renderHomePage() {
       document.getElementById('hero-mascot-block').innerHTML = buildMascotDialogueHTML(
         'welcome',
-        'Проводники маршрута — белка Власик и девочка Катя',
-        'Привет! Мы — белка <strong>Власик</strong> и девочка <strong>Катя</strong>. Мы проведём тебя по 6 станциям Чистяковской рощи: нажми <strong>«К маршруту»</strong>, слушай аудиогиды и выполни все задания для своего класса, чтобы открыть финал и получить именную грамоту!'
+        'Проводники маршрута — бельчонок Власик и девочка Катя',
+        'Привет! Мы — бельчонок <strong>Власик</strong> и девочка <strong>Катя</strong>. Мы проведём тебя по 6 станциям Чистяковской рощи: нажми <strong>«К маршруту»</strong>, слушай аудиогиды и выполни все задания для своего класса, чтобы открыть финал и получить именную грамоту!'
       );
 
       renderAtlas('all');
